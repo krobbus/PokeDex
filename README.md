@@ -1,73 +1,35 @@
-# React + TypeScript + Vite
+# [Re-designed] Pokedex
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A retro-inspired Pokedex website built with React and TypeScript. This project was developed during 1st-year project and I re-designed for educational and portfolio puroses. It interacts with the PokeAPI to provide real-time data on over 1,300 Pokemon, featuring dynamic filtering, searching, and a detailed modal view.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+* **Dynamic Data Fetching:** Loads Pokémon in batches for optimal performance.
+* **Smart Search:** Find any Pokémon instantly by Name or Pokemon ID with error handling for misspelled names.
+* **Type Filtering & Sorting:** Filter the current view by elemental type and sort by ID (Highest/Lowest) or Alphabetical order.
+* **Detailed Modal:** View specific Pokémon details, including descriptions and abilities, retrieved via secondary API calls.
+* **Adaptive UI:** Custom icons that automatically update based on the selected Pokémon type.
+* **Error Handling:** Robust fallbacks for missing sprites and empty filter results.
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+* **Framework:** React 18
+* **Language:** TypeScript
+* **API:** [PokeAPI](https://pokeapi.co/)
+* **Styles:** Custom CSS3 (Grid & Flexbox)
 
-## Expanding the ESLint configuration
+## Installation & Setup
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+1. **Clone the repository:**
+   ```bash
+   git clone [https://github.com/your-username/pokedex-react.git](https://github.com/your-username/pokedex-react.git)
+   npm install
+   npm run dev
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+2. **Project Structure Requirements:**
+* **/src/assets/type-icons/** contains *.svg files; ex. fire.svg, bug.svg, ...*
+* **/public/** contains *pokedex-logo.png*
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## About this Project
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+This is a non-commercial, fan-made project. All Pokémon data is provided by the [PokeAPI](https://pokeapi.co/). Pokémon names, images, and related media are trademarks and copyrights of **Nintendo, Game Freak, and Creatures.**. This project is intended under "Fair Use" for educational purposes. No copyright infringement is intended.
