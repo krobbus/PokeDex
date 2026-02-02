@@ -3,8 +3,11 @@
 A retro-inspired Pokedex website built with React and TypeScript. This project was developed during 1st-year college and I re-designed for educational and portfolio purposes. It focuses exclusively on the core **PokeDex structure** (designed as *data-reference tool* for the list of Pokemon. This to maintain a clean focus on Pokedex architecture) and interacts with the **PokeAPI** to provide real-time data on over 1,300 Pokemon, featuring dynamic filtering, searching, and a detailed modal view.
 
 ## Old Features
-![Demo Video of Login Page](https://drive.google.com/file/d/1j-EkE22MaBJIkmvPK2ahEbudEhL_EpMA/view?usp=sharing)
-![Demo Video of Home Page](https://drive.google.com/file/d/1j-EkE22MaBJIkmvPK2ahEbudEhL_EpMA/view?usp=sharing)
+<img width="1196" height="580" alt="image" src="https://github.com/user-attachments/assets/9b51d155-633b-4c1a-99d0-494afe7907c5" />
+*Login Page*
+
+<img width="1197" height="577" alt="image" src="https://github.com/user-attachments/assets/14e2a1b7-c7f4-4d1c-8f54-a9b96cfc1913" />
+*Home Page*
 
 ## New Features
 
