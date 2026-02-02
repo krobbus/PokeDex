@@ -1,8 +1,12 @@
-# [Re-designed] Pokedex
+# [Re-Designed] Pokedex
 
-A retro-inspired Pokedex website built with React and TypeScript. This project was developed during 1st-year project and I re-designed for educational and portfolio puroses. It interacts with the PokeAPI to provide real-time data on over 1,300 Pokemon, featuring dynamic filtering, searching, and a detailed modal view.
+A retro-inspired Pokedex website built with React and TypeScript. This project was developed during 1st-year college and I re-designed for educational and portfolio purposes. It focuses exclusively on the core **PokeDex structure** (designed as *data-reference tool* for the list of Pokemon. This to maintain a clean focus on Pokedex architecture) and interacts with the **PokeAPI** to provide real-time data on over 1,300 Pokemon, featuring dynamic filtering, searching, and a detailed modal view.
 
-## Features
+## Old Features
+![Demo Video of Login Page](https://drive.google.com/file/d/1j-EkE22MaBJIkmvPK2ahEbudEhL_EpMA/view?usp=sharing)
+![Demo Video of Home Page](https://drive.google.com/file/d/1j-EkE22MaBJIkmvPK2ahEbudEhL_EpMA/view?usp=sharing)
+
+## New Features
 
 * **Dynamic Data Fetching:** Loads Pokémon in batches for optimal performance.
 * **Smart Search:** Find any Pokémon instantly by Name or Pokemon ID with error handling for misspelled names.
@@ -20,15 +24,15 @@ A retro-inspired Pokedex website built with React and TypeScript. This project w
 
 ## Installation & Setup
 
-1. **Clone the repository:**
+1. **Project Structure Requirements:**
+* **/src/assets/type-icons/** contains *.svg files; ex. fire.svg, bug.svg, ...*
+* **/public/** contains *pokedex-logo.png*
+
+2. **Clone the repository:**
    ```bash
    git clone [https://github.com/your-username/pokedex-react.git](https://github.com/your-username/pokedex-react.git)
    npm install
    npm run dev
-
-2. **Project Structure Requirements:**
-* **/src/assets/type-icons/** contains *.svg files; ex. fire.svg, bug.svg, ...*
-* **/public/** contains *pokedex-logo.png*
 
 ## About this Project
 
