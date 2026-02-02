@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modal-box{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding: 2rem;
+    width: 90%;
+    max-width: 800px;
+    min-height: 400px;
+    border: 8px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+
+    animation: popFade 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.modal-content {
+    width: 100%;
+    margin: 0;
+
+    font-family: "Press Start 2P", cursive;
+    font-size: 2rem;
+    letter-spacing: 1px;
+    color: #ffffff;
+    text-align: center;
+}
+
+@keyframes popFade {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+header{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+
+    span{
+        font-size: 1rem;
+        font-weight: bold; 
+    }
+}
+
+h2{
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2.5rem;
+    text-shadow: 3px 3px 0px rgba(0,0,0,0.3); 
+}
+
+#contentContainer{
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    #imageContainer{
+        background: rgba(255, 255, 255, 0.25);
+        border-radius: 15px; 
+        padding: 20px;
+        flex: 1;
+        min-width: 250px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        img{
+            width: 220px;
+            filter: drop-shadow(10px 10px 0px rgba(0,0,0,0.1));
+        }
+    }
+
+    #fullDescriptionContainer{
+        display: flex;
+        flex: 1.5;
+        flex-direction: column;
+        gap: 1rem;
+        min-width: 300px;
+
+        font-size: 1rem;
+
+        #statsContainer{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+
+            ul{
+                list-style: none;
+                line-height: 1.5;
+            }
+        }
+
+        h3{
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #ffffff;
+            display: inline-block;
+        }
+    }
+}
+
+.close-btn {
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    background: #ff4444;
+    color: white;
+    border: 2px solid white;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-family: "Press Start 2P", cursive;
+    font-size: 12px;
+    z-index: 10;
+}
