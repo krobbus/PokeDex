@@ -1,8 +1,18 @@
-# [Re-designed] Pokedex
+# [Re-Designed] Pokedex
 
-A retro-inspired Pokedex website built with React and TypeScript. This project was developed during 1st-year project and I re-designed for educational and portfolio puroses. It interacts with the PokeAPI to provide real-time data on over 1,300 Pokemon, featuring dynamic filtering, searching, and a detailed modal view.
+A retro-inspired Pokedex website built with React and TypeScript. This project was developed during 1st-year college and I redesigned for educational and portfolio purposes. It focuses exclusively on the core **PokeDex structure** (designed as *data-reference tool* for the list of Pokemon. This to maintain a clean focus on Pokedex architecture) and interacts with the **PokeAPI** to provide real-time data on over 1,300 Pokemon, featuring dynamic filtering, searching, and a detailed modal view.
 
-## Features
+## Old Features
+
+Unlike previous version that were static and non-interactive, this redesigned Pokedex transforms the experience into a fully interactive platform. To streamline the user experience, I have intentionally removed old features such as the TV Series, Games, and Quiz pages—that were unnecessary for a dedicated data tool. This allowed me to focus my efforts on refining core features, such as the History Page for every pokemon, and ensuring the new Pokedex architecture is both clean and functional.
+
+<img width="1196" height="580" alt="image" src="https://github.com/user-attachments/assets/9b51d155-633b-4c1a-99d0-494afe7907c5" />
+The Login Page and account features have been intentionally removed. As a public data-reference tool, requiring account management is unnecessary. This ensures that users have immediate, unrestricted access to the Pokedex data without the hurdle of an authentication process.
+
+<img width="1197" height="577" alt="image" src="https://github.com/user-attachments/assets/14e2a1b7-c7f4-4d1c-8f54-a9b96cfc1913" />
+This Home Page is limited to a simple display list, this update ensures every piece of Pokemon data is presented through a dynamic and engaging interface.
+
+## New Features
 
 * **Dynamic Data Fetching:** Loads Pokémon in batches for optimal performance.
 * **Smart Search:** Find any Pokémon instantly by Name or Pokemon ID with error handling for misspelled names.
@@ -20,15 +30,15 @@ A retro-inspired Pokedex website built with React and TypeScript. This project w
 
 ## Installation & Setup
 
-1. **Clone the repository:**
+1. **Project Structure Requirements:**
+* **/src/assets/type-icons/** contains *.svg files; ex. fire.svg, bug.svg, ...*
+* **/public/** contains *pokedex-logo.png*
+
+2. **Clone the repository:**
    ```bash
    git clone [https://github.com/your-username/pokedex-react.git](https://github.com/your-username/pokedex-react.git)
    npm install
    npm run dev
-
-2. **Project Structure Requirements:**
-* **/src/assets/type-icons/** contains *.svg files; ex. fire.svg, bug.svg, ...*
-* **/public/** contains *pokedex-logo.png*
 
 ## About this Project
 
