@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useMemo } from 'react';
 import './css/pokemon-list-styles.css';
 import PokemonCard from './PokemonCard';
 import PokemonModal from './PokemonModal';
@@ -9,6 +9,7 @@ import filterIcon from './assets/filter-icon.png';
 
 const PokemonList: React.FC = () => {
   const [pokemonList, setPokemonList] = useState<PokemonProps[]>([]);
+  const [allPokemon, setAllPokemon] = useState<{ name: string; url: string }[]>([]);
   const hasFetched = useRef(false);
 
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -34,6 +35,26 @@ const PokemonList: React.FC = () => {
     if (pokemonList.length > 0) return ver(pokemonList[0].id);
     return "LOADING...";
   })();
+
+  useEffect(() => {
+    const fetchMasterList = async () => {
+      try {
+        const res = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${totalPokemon}`);
+        const data = await res.json();
+        setAllPokemon(data.results);
+      } catch (err) {
+        console.error("Master list fetch failed", err);
+      }
+    };
+    fetchMasterList();
+  }, []);
+
+  const searchMatches = useMemo(() => {
+    if (!searchQuery.trim()) return [];
+    return allPokemon.filter((p) =>
+      p.name.toLowerCase().includes(searchQuery.toLowerCase().trim())
+    );
+  }, [searchQuery, allPokemon]);
 
   const handleOpenModal = async (pokemon: any) => {
     setListLoading(true);
@@ -180,16 +201,15 @@ const PokemonList: React.FC = () => {
   return (
     <>
       <section id="navContainer">
-        <section id="navWrapper">
-          <nav id="navStyle">
-            <a href={'#navStyle'}><img id="navLogo" src={logo} /></a>
+        <nav id="navStyle">
+          <a href={'#navStyle'}><img id="navLogo" src={logo} /></a>
 
-            <ul id="navUlStyle">
-              <li><a href={'#navStyle'}>Home</a></li>
-              <li><a href={'#about'}>About</a></li>
-            </ul>
-          </nav>
-        </section>
+          <ul id="navUlStyle">
+            <li><a href={'#navStyle'}>Home</a></li>
+            <li><a href={'#'}>History</a></li>
+            <li><a href={'#about'}>About</a></li>
+          </ul>
+        </nav>
       </section>
       
       <section id="flexStyle">
@@ -265,7 +285,12 @@ const PokemonList: React.FC = () => {
                 onError={(e) => { e.currentTarget.style.display = 'none'; }}
                 alt={`${sortTypeBy} icon`} 
               />
-              <select id="filterTypeSelection" value={sortTypeBy} onChange={(e) => setTypeSortBy(e.target.value)}>
+              <select 
+                id="filterTypeSelection" 
+                style={{ paddingLeft: sortTypeBy === 'all' ? '10px' : '50px' }}
+                value={sortTypeBy} 
+                onChange={(e) => setTypeSortBy(e.target.value)}
+                >
                 <option value="all">All Types</option>
                 <option value="bug">Bug Type</option>
                 <option value="dark">Dark Type</option>
@@ -293,15 +318,30 @@ const PokemonList: React.FC = () => {
         {loading && <p style={{ color: 'white', fontFamily: "'Press Start 2P', cursive", marginBottom: '10px' }}>SEARCHING TALL GRASS...</p>}
 
         <section id="gridStyle" style={{ opacity: loading ? 0.5 : 1 }}>
-          {searchResult ? (
-            <PokemonCard 
-              id={searchResult.id} 
-              name={searchResult.name} 
-              image={searchResult.image} 
-              types={searchResult.types} 
-              hp={searchResult.hp}
-              onClick={() => handleOpenModal(searchResult)}
-            />
+            {searchQuery.trim() !== '' ? (
+              searchMatches.length > 0 ? (
+                searchMatches.map((p) => { 
+                  const id = p.url.split('/')[6]; 
+                  const pokemonId = parseInt(id);
+
+                  return (
+                    <PokemonCard 
+                      key={id} 
+                      id={pokemonId} 
+                      name={p.name} 
+                      image={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`} 
+                      types={[]}
+                      hp={searchResult?.id === pokemonId ? searchResult.hp : 0}
+                      onClick={() => handleOpenModal({ id: pokemonId, name: p.name })}
+                    />
+                  )
+                }
+              )
+            ) : (
+              <p style={{ textAlign: 'center', gridColumn: '1 / -1', fontFamily: "'Press Start 2P', cursive", marginTop: "4rem" }}>
+                NO POKEMON MATCHING "{searchQuery.toUpperCase()}"
+              </p>
+            )
           ) : sortPokemon.length > 0 ? (
             sortPokemon.map((p, index) => (
               <PokemonCard 
@@ -310,13 +350,14 @@ const PokemonList: React.FC = () => {
                 onClick={() => handleOpenModal(p)}
               />
             ))
-          ) : (
+          ) : ( !loading && !searchResult && (
             <section>
-              <p style={{ color: 'white', textAlign: 'center', gridColumn: '1 / -1', fontFamily: "'Press Start 2P', cursive", marginTop: "4rem"}}>
+              <p style={{ textAlign: 'center', gridColumn: '1 / -1', fontFamily: "'Press Start 2P', cursive", marginTop: "4rem" }}>
                 NO {sortTypeBy.toUpperCase()} TYPES SPOTTED ON THIS PAGE.
               </p><br />
               <p>TRY CHANGING THE PAGE OR FILTER, TRAINER.</p>
             </section>
+            )
           )}
         </section>
       </section>
