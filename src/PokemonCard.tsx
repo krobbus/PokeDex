@@ -1,9 +1,12 @@
+import React, { useEffect, useState } from 'react';
 import type { PokemonProps } from './types.ts';
 import { PokemonTypeColors } from './types.ts';
 import './css/pokemon-card-styles.css';
 
-const PokemonCard: React.FC<PokemonProps & { onClick: () => void }> = ({ id, name, image, types, hp, onClick }) => {
+const PokemonCard: React.FC<PokemonProps & { onClick: () => void }> = ({ id, name, image, types: initialTypes, hp: initialHp, onClick }) => {
     const formattedId = `#${id.toString().padStart(4, '0')}`;
+    const [types, setTypes] = useState<string[]>(initialTypes || []);
+    const [hp, setHp] = useState<number>(initialHp || 0);
 
     const getBackground = () => {
         if (types.length === 2) {
@@ -13,6 +16,18 @@ const PokemonCard: React.FC<PokemonProps & { onClick: () => void }> = ({ id, nam
         }
         return PokemonTypeColors[types[0]] || '#A8A878';
     };
+
+    useEffect(() => {
+        if (types.length === 0 || hp === 0) {
+        fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
+            .then(res => res.json())
+            .then(data => {
+            setTypes(data.types.map((t: any) => t.type.name));
+            setHp(data.stats[0].base_stat);
+            })
+            .catch(err => console.error("Error auto-fetching card details:", err));
+        }
+    }, [id]);
         
     return (
         <section className="dynamicCardStyle" 
