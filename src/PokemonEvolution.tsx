@@ -1,4 +1,6 @@
+import React from 'react';
 import './css/pokemon-evolution-styles.css';
+import DNA from './components/dna-animation/DNA';
 
 const PokemonEvolution: React.FC = () => {
     return (
@@ -9,7 +11,7 @@ const PokemonEvolution: React.FC = () => {
 
                     <section id="evolutionFlexContainer">
                         <section id="evolutionImgContainer">
-                            <img />
+                            <DNA />
                         </section>
 
                         <section id="evolutionDescription">
@@ -20,6 +22,6 @@ const PokemonEvolution: React.FC = () => {
             </section>
         </section>
     );
-}
+};
 
 export default PokemonEvolution

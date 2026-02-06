@@ -1,6 +1,7 @@
 #evolutionContainer{
     height: 800px;
     width: 100%;
+    margin-bottom: 1rem;
     padding: 2rem;
     box-sizing: border-box;
 
