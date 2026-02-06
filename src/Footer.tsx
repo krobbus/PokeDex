@@ -31,8 +31,8 @@ const Footer: React.FC = () => {
                     <h3>About PokeDex</h3>
 
                     <ul>
-                        <li><a href="">Learn More [Github]</a></li>
-                        <li><a href="">Official PokeDex Site</a></li>
+                        <li><a href="https://github.com/krobbus/PokeDex/blob/main/README.md">Learn More [Github]</a></li>
+                        <li><a href="https://www.pokemon.com/us/pokedex">Official PokeDex Site</a></li>
                     </ul>
                 </section>
             </section>

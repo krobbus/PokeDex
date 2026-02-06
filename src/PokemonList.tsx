@@ -3,12 +3,13 @@ import './css/pokemon-list-styles.css';
 
 import PokemonCard from './PokemonCard';
 import PokemonModal from './PokemonModal';
+import PokemonEvolution from './PokemonEvolution';
 import Footer from './Footer';
 
 import type { PokemonProps } from './types';
 import { ver } from './types.ts';
 
-import logo from '/public/pokedex-logo.png';
+import logo from '/pokedex-logo.png';
 import filterIcon from './assets/filter-icon.png';
 
 const PokemonList: React.FC = () => {
@@ -60,8 +61,14 @@ const PokemonList: React.FC = () => {
       setSelectedPokemon({
         ...pokemon,
         abilities: detailData.abilities.map((a: any) => a.ability.name),
-        description: description
-      });
+        description: description,
+        height: detailData.height, 
+        weight: detailData.weight,
+        stats: detailData.stats.map((s: any) => ({
+          name: s.stat.name,
+          value: s.base_stat
+        })),
+  });
       
       setListLoading(false);
       setIsModalOpen(true);
@@ -333,7 +340,8 @@ const PokemonList: React.FC = () => {
             )}
           </section>
       </section>
-
+      
+      <PokemonEvolution />
       <Footer />
 
       <PokemonModal 

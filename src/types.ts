@@ -9,6 +9,9 @@ export interface PokemonProps {
 export interface ExtendedPokemonProps extends PokemonProps {
   abilities: string[];
   description: string;
+  stats: string[];
+  height: number;
+  weight: number;
 };
 
 export interface ModalProps {
