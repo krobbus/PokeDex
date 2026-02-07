@@ -43,9 +43,9 @@ const DNA: React.FC = () => {
                         style={{ 
                             '--index': i,
                             position: "absolute",
-                            height: "4px",
+                            height: "6px",
                             width: "100%",
-                            background: "rgba(34, 79, 35, 0.8)",
+                            background: "linear-gradient( #1e481f, #2f6f30 )",
                             borderRadius: "50px",
                             left: "0",
                             top: "calc(var(--index) * 20px)",                           

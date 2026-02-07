@@ -22,6 +22,7 @@ const PokemonList: React.FC = () => {
   const [selectedPokemon, setSelectedPokemon] = useState<any | null>(null);
   const [sortBy, setSortBy] = useState<string>('lowest');
   const [sortTypeBy, setTypeSortBy] = useState<string>('all');
+  const [isShinyMode, setIsShinyMode] = useState(false);
 
   const [loading, setLoading] = useState<boolean>(false);
   const [offset, setOffset] = useState<number>(0);
@@ -93,11 +94,15 @@ const PokemonList: React.FC = () => {
         const res = await fetch(p.url);
         const details = await res.json();
         const imageSource = details.sprites.front_default || logo;
+        const shinyImageSource = details.sprites.front_shiny || logo;
+        const luckyRoll = Math.random() < 0.1;
 
         return {
           id: details.id,
           name: details.name,
           image: imageSource,
+          shinyImage: luckyRoll ? shinyImageSource : imageSource,
+          isShiny: luckyRoll,
           types: details.types.map((t: any) => t.type.name),
           hp: details.stats[0].base_stat
         };
@@ -144,11 +149,15 @@ const PokemonList: React.FC = () => {
       if (!res.ok) throw new Error('ERROR: POKEMON DATA NOT FOUND. CHECK YOUR SPELLING, TRAINER.');
       const details = await res.json();
       const imageSource = details.sprites.front_default || logo;
+      const shinyImageSource = details.sprites.front_shiny || logo;
+      const luckyRoll = Math.random() < 0.1;
 
       setSearchResult({
         id: details.id,
         name: details.name,
         image: imageSource,
+        shinyImage: luckyRoll ? shinyImageSource : imageSource,
+        isShiny: luckyRoll,
         types: details.types.map((t: any) => t.type.name),
         hp: details.stats[0].base_stat,
       });
@@ -209,7 +218,7 @@ const PokemonList: React.FC = () => {
           <ul id="navUlStyle">
             <li><a href={'#flexStyle'}>Home</a></li>
             <li><a href={'#evolutionContainer'}>Evolution</a></li>
-            <li><a href={'#'}>Spot the Shiny</a></li>
+            <li><a href={'#shinyToggleBtn'}>Spot the Shiny</a></li>
             <li><a href={'#footerContainer'}>About</a></li>
           </ul>
         </nav>
@@ -317,6 +326,14 @@ const PokemonList: React.FC = () => {
           </section>
         )}
 
+        <button 
+          className={`shiny-toggle-btn ${isShinyMode ? 'active' : ''}`}
+          id="shinyToggleBtn"
+          onClick={() => setIsShinyMode(!isShinyMode)}
+        >
+          {isShinyMode ? "✦ SHINY MODE ON" : "✦ SPOT THE SHINY"}
+        </button>
+
         {listLoading && <p style={{ color: 'white', fontFamily: "'Press Start 2P', cursive", marginBottom: '10px'}}>SCANNING POKEMON DETAILS, TRAINER PLEASE WAIT...</p>}
         {loading && <p style={{ color: 'white', fontFamily: "'Press Start 2P', cursive", marginBottom: '10px' }}>SEARCHING TALL GRASS...</p>}
 
@@ -325,7 +342,8 @@ const PokemonList: React.FC = () => {
               <PokemonCard 
                 id={searchResult.id} 
                 name={searchResult.name} 
-                image={searchResult.image} 
+                image={searchResult.image}
+                shinyImage={searchResult.shinyImage}
                 types={searchResult.types} 
                 hp={searchResult.hp}
                 onClick={() => handleOpenModal(searchResult)}
@@ -335,7 +353,9 @@ const PokemonList: React.FC = () => {
                 sortPokemon.map((p, index) => (
                   <PokemonCard 
                     key={`${p.name}-${index}`} 
-                    {...p} 
+                    {...p}
+                    image={isShinyMode ? p.shinyImage : p.image}
+                    isShiny={isShinyMode && p.isShiny}
                     onClick={() => handleOpenModal(p)}
                   />
                 ))

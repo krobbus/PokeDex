@@ -2,6 +2,8 @@ export interface PokemonProps {
   id: number;
   name: string;
   image: string;
+  shinyImage:string;
+  isShiny?: boolean;
   types: string[];
   hp: number;
 };

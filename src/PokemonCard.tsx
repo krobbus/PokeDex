@@ -3,12 +3,14 @@ import type { PokemonProps } from './types.ts';
 import { PokemonTypeColors } from './types.ts';
 import './css/pokemon-card-styles.css';
 
-const PokemonCard: React.FC<PokemonProps & { onClick: () => void }> = ({ id, name, image, types: initialTypes, hp: initialHp, onClick }) => {
+const PokemonCard: React.FC<PokemonProps & { onClick: () => void }> = ({ id, name, image, isShiny, types: initialTypes, hp: initialHp, onClick }) => {
     const formattedId = `#${id.toString().padStart(4, '0')}`;
     const [types, setTypes] = useState<string[]>(initialTypes || []);
     const [hp, setHp] = useState<number>(initialHp || 0);
 
     const getBackground = () => {
+        if (isShiny) return undefined;
+        
         if (types.length === 2) {
             const color1 = PokemonTypeColors[types[0]] || '#A8A878';
             const color2 = PokemonTypeColors[types[1]] || '#A8A878';
@@ -30,13 +32,15 @@ const PokemonCard: React.FC<PokemonProps & { onClick: () => void }> = ({ id, nam
     }, [id]);
         
     return (
-        <section className="dynamicCardStyle" 
+        <section className={`dynamicCardStyle ${isShiny ? 'is-shiny' : ''}`}
             style={{ ...cardStyle, background: getBackground(), cursor: 'pointer' }} 
             onClick={(e) => {
                 e.stopPropagation();
                 onClick();
             }}
         >
+            {isShiny && <span className="shiny-sparkle">✦</span>}
+
             <section id="headerStyle">
                 <span id="idStyle">{formattedId}</span>
                 <span id="hpStyle">{hp} HP</span>
