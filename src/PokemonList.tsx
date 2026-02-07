@@ -7,7 +7,7 @@ import PokemonEvolution from './PokemonEvolution';
 import Footer from './Footer';
 
 import type { PokemonProps } from './types';
-import { ver } from './types.ts';
+import { ver } from './types';
 
 import logo from '/pokedex-logo.png';
 import filterIcon from './assets/filter-icon.png';
@@ -68,6 +68,7 @@ const PokemonList: React.FC = () => {
           name: s.stat.name,
           value: s.base_stat
         })),
+        evolutionUrl: speciesData.evolution_chain.url
   });
       
       setListLoading(false);
@@ -341,7 +342,11 @@ const PokemonList: React.FC = () => {
           </section>
       </section>
       
-      <PokemonEvolution />
+      {selectedPokemon && (
+        <PokemonEvolution 
+          evolutionUrl={selectedPokemon.evolutionUrl || ''} 
+        />
+      )}
       <Footer />
 
       <PokemonModal 

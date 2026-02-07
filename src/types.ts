@@ -20,6 +20,10 @@ export interface ModalProps {
   pokemon: ExtendedPokemonProps | null;
 };
 
+export interface UrlProps {
+  evolutionUrl: string;
+}
+
 export const PokemonTypeColors: Record<string, string> = {
   grass: '#78C850',
   fire: '#ff8888',
