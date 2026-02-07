@@ -7,7 +7,7 @@ const PokemonModal: React.FC<ModalProps> = ({ isOpen, onClose, pokemon }) => {
     if (!isOpen || !pokemon) return null;
 
     const getBackground = () => {
-        if (pokemon.types.length === 2) {
+        if (!pokemon || !pokemon.types || pokemon.types.length === 2) {
             const color1 = PokemonTypeColors[pokemon.types[0]] || '#A8A878';
             const color2 = PokemonTypeColors[pokemon.types[1]] || '#A8A878';
             return `linear-gradient(135deg, ${color1}, ${color2})`;

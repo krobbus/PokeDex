@@ -41,6 +41,7 @@ const PokemonList: React.FC = () => {
   })();
 
   const handleOpenModal = async (pokemon: any) => {
+    setSelectedPokemon(pokemon);
     setListLoading(true);
     setError('');
 
@@ -60,6 +61,7 @@ const PokemonList: React.FC = () => {
 
       setSelectedPokemon({
         ...pokemon,
+        types: detailData.types.map((t: any) => t.type.name),
         abilities: detailData.abilities.map((a: any) => a.ability.name),
         description: description,
         height: detailData.height, 
@@ -69,7 +71,7 @@ const PokemonList: React.FC = () => {
           value: s.base_stat
         })),
         evolutionUrl: speciesData.evolution_chain.url
-  });
+      });
       
       setListLoading(false);
       setIsModalOpen(true);
@@ -97,7 +99,7 @@ const PokemonList: React.FC = () => {
           name: details.name,
           image: imageSource,
           types: details.types.map((t: any) => t.type.name),
-          hp: details.stats[0].base_stat,
+          hp: details.stats[0].base_stat
         };
       });
 
@@ -176,6 +178,15 @@ const PokemonList: React.FC = () => {
   });
 
   useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => { document.body.style.overflow = 'unset'; };
+  }, [isModalOpen]);
+
+  useEffect(() => {
     const fetchInitialData = async () => {
       if (!hasFetched.current) {
         await fetchBatch(0);
@@ -197,7 +208,7 @@ const PokemonList: React.FC = () => {
           
           <ul id="navUlStyle">
             <li><a href={'#flexStyle'}>Home</a></li>
-            <li><a href={'#'}>Evolution</a></li>
+            <li><a href={'#evolutionContainer'}>Evolution</a></li>
             <li><a href={'#'}>Spot the Shiny</a></li>
             <li><a href={'#footerContainer'}>About</a></li>
           </ul>
@@ -343,13 +354,15 @@ const PokemonList: React.FC = () => {
       </section>
       
       {selectedPokemon && (
-        <PokemonEvolution 
-          evolutionUrl={selectedPokemon.evolutionUrl || ''} 
+        <PokemonEvolution
+          evolutionUrl={selectedPokemon.evolutionUrl || ''}
+          openModal={handleOpenModal}
         />
       )}
+
       <Footer />
 
-      <PokemonModal 
+      <PokemonModal
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)} 
         pokemon={selectedPokemon} 

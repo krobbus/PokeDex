@@ -22,6 +22,7 @@ export interface ModalProps {
 
 export interface UrlProps {
   evolutionUrl: string;
+  openModal: (pokemon: any) => void;
 }
 
 export const PokemonTypeColors: Record<string, string> = {

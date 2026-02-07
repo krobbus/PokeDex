@@ -1,18 +1,20 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 
+const rotateHelix = keyframes
+`
+    from {
+        transform: rotateY(0deg);
+    }
+    to {
+        transform: rotateY(360deg);
+    }
+`;
+
+const BarAnim = styled.section` animation: ${rotateHelix} 6s linear infinite; `;
+
 const DNA: React.FC = () => {
-    const totalBars = 20;
-    const rotateHelix = keyframes
-    `
-        from {
-            transform: rotateY(0deg);
-        }
-        to {
-            transform: rotateY(360deg);
-        }
-    `;
-    const BarAnim = styled.section` animation: ${rotateHelix} 5s linear infinite; `;
+    const totalBars = 50;
 
     return (
         <section 
@@ -29,8 +31,8 @@ const DNA: React.FC = () => {
                 className="blueprint"
                 style={{
                     position: 'relative',
-                    width: "100px",
-                    height: "400px",
+                    width: "300px",
+                    height: "800px",
                     transformStyle: "preserve-3d"
                 }}
             >
