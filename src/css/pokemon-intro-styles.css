@@ -1,0 +1,55 @@
+#introContainer{
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    position: fixed;
+    box-sizing: border-box;
+    z-index: 9999;
+
+    #pokedexImgContainer{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transition: transform 2.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        #pokedexImg{
+            height: 200px;
+            width: auto;
+        }
+    }
+
+    #pokedexLogoContainer{
+        position: absolute;
+        left: 10px;
+        bottom: 10px;
+
+        #pokedexLogo{
+            height: 50px;
+            width: auto;
+        }
+    }
+
+    #scrollTrack{
+        position: absolute;
+        bottom: -40%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 500px;
+        height: 100%;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        z-index: 10;
+    }
+}
+
+#blackoutAnim{
+    position: fixed;
+    inset: 0;
+    background-color: #000000;
+    z-index: 100;
+    transition: opacity 1.5s ease-in-out;
+    overflow: hidden;
+}

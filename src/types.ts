@@ -1,3 +1,7 @@
+export interface IntroProps {
+  onComplete: () => void;
+};
+
 export interface PokemonProps {
   id: number;
   name: string;

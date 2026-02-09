@@ -220,6 +220,7 @@ const PokemonList: React.FC = () => {
             <li><a href={'#evolutionContainer'}>Evolution</a></li>
             <li><a href={'#shinyToggleBtn'}>Spot the Shiny</a></li>
             <li><a href={'#footerContainer'}>About</a></li>
+            <li id="logout"><a href={'./PokemonIntro'}>Go Back</a></li>
           </ul>
         </nav>
       </section>
