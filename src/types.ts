@@ -45,7 +45,57 @@ export const PokemonTypeColors: Record<string, string> = {
   dragon: '#160505',
   dark: '#5f5f5f',
   steel: '#B8B8D0',
-  flying: '#A890F0',
+  flying: '#A890F0'
+};
+
+interface TypeRelation {
+  strengths: string[];
+  weaknesses: string[];
+}
+
+export const PokemonTypeChart: Record<string, TypeRelation> = {
+  bug: { strengths: ['grass', 'dark', 'psychic'], weaknesses: ['fire', 'flying', 'rock'] },
+  dark: { strengths: ['ghost', 'psychic'], weaknesses: ['bug', 'fairy', 'fighting'] },
+  dragon: { strengths: ['dragon'], weaknesses: ['dragon', 'fairy', 'ice'] },
+  electric: { strengths: ['flying', 'water'], weaknesses: ['ground'] },
+  fairy: { strengths: ['fighting', 'dark', 'dragon'], weaknesses: ['poison', 'steel'] },
+  fighting: { strengths: ['dark', 'ice', 'normal', 'rock', 'steel'], weaknesses: ['fairy', 'flying', 'psychic'] },
+  fire: { strengths: ['bug', 'grass', 'ice', 'steel'], weaknesses: ['ground', 'rock', 'water'] },
+  flying: { strengths: ['bug', 'fighting', 'grass'], weaknesses: ['electric', 'ice', 'rock'] },
+  ghost: { strengths: ['ghost', 'psychic'], weaknesses: ['dark', 'ghost'] },
+  grass: { strengths: ['ground', 'rock', 'water'], weaknesses: ['bug', 'fire', 'flying', 'ice', 'poison'] },
+  ground: { strengths: ['electric', 'fire', 'poison', 'rock', 'steel'], weaknesses: ['grass', 'ice', 'water'] },
+  ice: { strengths: ['dragon', 'flying', 'grass', 'ground'], weaknesses: ['fighting', 'fire', 'rock', 'steel'] },
+  normal: { strengths: [], weaknesses: ['fighting'] },
+  poison: { strengths: ['fairy', 'grass'], weaknesses: ['ground', 'psychic'] },
+  psychic: { strengths: ['fighting', 'poison'], weaknesses: ['bug', 'dark', 'ghost'] },
+  rock: { strengths: ['bug', 'fire', 'flying', 'ice'], weaknesses: ['fighting', 'grass', 'ground', 'steel', 'water'] },
+  steel: { strengths: ['fairy', 'ice', 'rock'], weaknesses: ['fighting', 'fire', 'ground'] },
+  water: { strengths: ['fire', 'ground', 'rock'], weaknesses: ['electric', 'grass'] }
+};
+
+export const calculateEffectiveness = (types: string[]) => {
+  const multipliers: Record<string, number> = {};
+
+  Object.keys(PokemonTypeChart).forEach(type => {
+    multipliers[type] = 1;
+  });
+
+  types.forEach(pokemonType => {
+    const typeLower = pokemonType.toLowerCase();
+    const data = PokemonTypeChart[typeLower];
+
+    if (data) {
+      data.weaknesses.forEach(w => {
+        multipliers[w] *= 2;
+      });
+      data.strengths.forEach(s => {
+        multipliers[s] *= 0.5;
+      });
+    }
+  });
+
+  return multipliers;
 };
 
 export const ver = (id: number): string => {
