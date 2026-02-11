@@ -14,9 +14,25 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        z-index: 99;
 
         #pokedexImg{
             height: 200px;
+            width: auto;
+        }
+    }
+
+    #pokeTableContainer{
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        #pokeTable{
+            height: 600px;
             width: auto;
         }
     }
@@ -30,18 +46,6 @@
             height: 50px;
             width: auto;
         }
-    }
-
-    #scrollTrack{
-        position: absolute;
-        bottom: -40%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 500px;
-        height: 100%;
-        overflow-x: scroll;
-        overflow-y: hidden;
-        z-index: 10;
     }
 }
 

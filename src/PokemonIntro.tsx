@@ -10,11 +10,13 @@ const PokemonIntro: React.FC<IntroProps> = ({ onComplete }) => {
         const root = document.documentElement;
         const originalBg = root.style.backgroundImage;
 
-        root.style.backgroundImage = "none";
-        root.style.backgroundColor = "#767676";
-
+        root.style.backgroundImage = "url('./src/assets/intro-bg.png')";
+        root.style.backgroundSize = "stretch";
+        root.style.backgroundAttachment = "fixed";
+        root.style.backgroundRepeat = "repeat";
+        root.style.backgroundPosition = "center";
+        
         return () => {
-            root.style.backgroundColor = "";
             root.style.backgroundImage = originalBg;
         };
     }, []);
@@ -56,11 +58,15 @@ const PokemonIntro: React.FC<IntroProps> = ({ onComplete }) => {
                 onTransitionEnd={handleAnimationEnd}
                 style={{ 
                     transform: isBooting 
-                        ? "translate(200%, -10%) scale(10) rotate(0deg)"
+                        ? "translate(480%, -10%) scale(20) rotate(0deg)"
                         : "translate(-50%, -50%) scale(1) rotate(-30deg)"
                 }}
             >
                 <img src="./src/assets/pokedex.svg" id="pokedexImg" alt="pokedex component" />
+            </section>
+
+            <section id="pokeTableContainer">
+                <img src="./src/assets/intro-table.png" id="pokeTable" alt="table that have full of pokeballs" />
             </section>
 
             <section id="pokedexLogoContainer">
@@ -68,17 +74,36 @@ const PokemonIntro: React.FC<IntroProps> = ({ onComplete }) => {
             </section>
 
             {!isBooting && (
-                <p 
-                    style={{ 
-                        color: "white", 
-                        textAlign: "center",
-                        fontFamily: "'Press Start 2P', cursive",
-                        position: "absolute",
-                        bottom: "15%",
-                        width: "100%",
-                    }}>
-                    PRESS ANY KEY TO BOOT
-                </p>
+                <>
+                    <p 
+                        style={{ 
+                            color: "white", 
+                            textAlign: "center",
+                            fontFamily: "'Press Start 2P', cursive",
+                            position: "absolute",
+                            bottom: "22%",
+                            width: "100%",
+                        }}>
+                        PRESS ANY KEY TO BOOT
+                    </p>
+
+                    <small 
+                        style={{ 
+                            color: "white", 
+                            textAlign: "center",
+                            textShadow: "1px 1px black",
+                            fontFamily: "'Press Start 2P', cursive",
+                            position: "absolute",
+                            left: "50%",
+                            transform: "translate(-50%, 0)",
+                            bottom: "2%",
+                            width: "80%",
+                        }}>
+                        &copy; 2026 by Alef Justin Loresca. Pokémon names, images, and related media are trademarks and copyrights of 
+                        Nintendo, Game Freak, and Creatures.. This project is intended under "Fair Use" for educational purposes. 
+                        No copyright infringement is intended
+                    </small>
+                </>
             )}
         </section>
     );

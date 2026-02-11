@@ -4,6 +4,7 @@
   background-repeat: no-repeat;
   background-size: stretch;
   background-blend-mode: multiply;
+  background-position: center;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
