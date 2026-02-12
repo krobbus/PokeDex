@@ -339,39 +339,43 @@ const PokemonList: React.FC = () => {
         {loading && <p style={{ color: 'white', fontFamily: "'Press Start 2P', cursive", marginBottom: '10px' }}>SEARCHING TALL GRASS...</p>}
 
         <section id="gridStyle" style={{ opacity: loading ? 0.5 : 1 }}>
-            {searchResult ? (
-              <PokemonCard 
-                id={searchResult.id} 
-                name={searchResult.name} 
-                image={searchResult.image}
-                shinyImage={searchResult.shinyImage}
-                types={searchResult.types} 
-                hp={searchResult.hp}
-                onClick={() => handleOpenModal(searchResult)}
-              />
+          {searchResult ? (
+            <PokemonCard 
+              id={searchResult.id} 
+              name={searchResult.name} 
+              image={searchResult.image}
+              shinyImage={searchResult.shinyImage}
+              types={searchResult.types} 
+              hp={searchResult.hp}
+              onClick={() => handleOpenModal(searchResult)}
+            />
+          ) : (
+            sortPokemon.length > 0 ? (
+              sortPokemon.map((p, index) => (
+                <PokemonCard 
+                  key={`${p.name}-${index}`} 
+                  {...p}
+                  image={isShinyMode ? p.shinyImage : p.image}
+                  isShiny={isShinyMode && p.isShiny}
+                  onClick={() => handleOpenModal(p)}
+                />
+              ))
             ) : (
-              sortPokemon.length > 0 ? (
-                sortPokemon.map((p, index) => (
-                  <PokemonCard 
-                    key={`${p.name}-${index}`} 
-                    {...p}
-                    image={isShinyMode ? p.shinyImage : p.image}
-                    isShiny={isShinyMode && p.isShiny}
-                    onClick={() => handleOpenModal(p)}
-                  />
-                ))
-              ) : (
-                !loading && (
-                  <section style={{ textAlign: 'center', gridColumn: '1 / -1' }}>
-                    <p style={{ fontFamily: "'Press Start 2P', cursive", marginTop: "4rem" }}>
-                      NO {sortTypeBy.toUpperCase()} TYPES SPOTTED ON THIS PAGE.
-                    </p><br />
-                    <p>TRY CHANGING THE PAGE OR FILTER, TRAINER.</p>
-                  </section>
-                )
+              !loading && (
+                <section style={{ textAlign: 'center', gridColumn: '1 / -1' }}>
+                  <p style={{ fontFamily: "'Press Start 2P', cursive", marginTop: "4rem" }}>
+                    NO {sortTypeBy.toUpperCase()} TYPES SPOTTED ON THIS PAGE.
+                  </p><br />
+                  <p>TRY CHANGING THE PAGE OR FILTER, TRAINER.</p>
+                </section>
               )
-            )}
-          </section>
+            )
+          )}
+        </section>
+
+        {!selectedPokemon && <p style={{ color: 'white', textAlign: 'center', fontFamily: "'Press Start 2P', cursive", margin: '20px 0', lineHeight: '2' }}> 
+          CLICK ONE POKEMON CARD TO REVEAL ITS EVOLUTION<br />AFTER CLICKING, CLOSE THE MODAL AND RETURN HERE
+        </p>}
       </section>
       
       {selectedPokemon && (

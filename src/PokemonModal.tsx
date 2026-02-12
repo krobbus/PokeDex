@@ -6,7 +6,7 @@ import './css/pokemon-modal-styles.css';
 import logo from '/pokedex-logo.png';
 
 const PokemonModal: React.FC<ModalProps> = ({ isOpen, onClose, pokemon }) => {
-    if (!isOpen || !pokemon) return null;
+    if (!isOpen || !pokemon) return;
 
     const effectiveness = calculateEffectiveness(pokemon.types);
     const doubleWeak = Object.keys(effectiveness).filter(t => effectiveness[t] === 4);
