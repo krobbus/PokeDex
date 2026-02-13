@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import './css/pokemon-evolution-styles.css';
 import DNA from './components/DNA';
-import type { UrlProps } from './types';
 
-const PokemonEvolution: React.FC<UrlProps> = ({ evolutionUrl, openModal }) => {
+interface EvolutionProps {
+  evolutionUrl: string;
+  typeBackground: string;
+  onSelectNewPokemon: (name: string) => void;
+}
+
+const PokemonEvolution: React.FC<EvolutionProps> = ({ evolutionUrl, typeBackground, onSelectNewPokemon }) => {
     const [evolutionChain, setEvolutionChain] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
 
@@ -67,35 +72,39 @@ const PokemonEvolution: React.FC<UrlProps> = ({ evolutionUrl, openModal }) => {
 
     return (
         <section id="evolutionContainer">
-            <section id="evolutionDisplayWrapper">
-                <section id="evolutionDisplayContainer">
-                    <h2>EVOLUTION</h2>
-
-                    <section id="evolutionDisplay">
-                        <section className="dna-column">
+            <div id="evolutionDisplayWrapper">
+                <div id="evolutionDisplayContainer" 
+                    style={{ 
+                        background: typeBackground,
+                        backgroundBlendMode: "multiply",
+                        backgroundColor: "#A8A878"
+                    }}
+                >
+                    <div id="evolutionDisplay">
+                        <div className="dna-column">
                             <DNA />
-                        </section>
+                        </div>
 
-                        <section className="evolution-path-column">
+                        <div className="evolution-path-column">
                             {evolutionChain.map((evo, index) => (
-                                <section
+                                <div
                                     key={evo.name}
                                     className="evolution-step"
-                                    onClick={() => openModal(evo)}
                                     style={{cursor: 'pointer'}}
+                                    onClick={() => onSelectNewPokemon(evo.name)}
                                 >
                                     <img src={evo.image} alt={evo.name} />
-                                    <section className="evo-info">
+                                    <div className="evo-info">
                                         <p>{evo.name.toUpperCase()}</p>
                                         <span className="evo-label">STAGE {index + 1}</span>
                                         <span className="evo-description">{evo.description}</span>
-                                    </section>
-                                </section>
+                                    </div>
+                                </div>
                             ))}
-                        </section>
-                    </section>
-                </section>
-            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
     );
 };

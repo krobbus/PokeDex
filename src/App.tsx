@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import PokemonIntro from './PokemonIntro';
-import PokemonList from './PokemonList'; // Ensure this path is correct
+import PokemonList from './PokemonList';
 
 const App = () => {
     const [view, setView] = useState<'intro' | 'list'>('intro');

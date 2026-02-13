@@ -11,12 +11,11 @@
   -webkit-font-smoothing: antialiased;
 
   scroll-behavior: smooth;
-  scrollbar-gutter: stable;
   user-select: none;
 }
 
 ::-webkit-scrollbar{
-  width: 15px;
+  width: auto;
 }
 
 ::-webkit-scrollbar-track{

@@ -94,7 +94,7 @@
 
     #modalGrid{
         display: grid;
-        grid-template-columns: repeat(1fr, 1fr);
+        grid-template-columns: 1fr, 1fr;
         gap: 20px;
         width: 100%;
 
@@ -183,7 +183,8 @@
 
             .multiplier-label.x4 { color: #ff0000; }
             .multiplier-label.x2 { color: #ffaa00; }
-            .multiplier-label.half { color: #00ff00; }
+            .multiplier-label.half { color: #f2ff00; }
+            .multiplier-label.none { color: #00ff00; }
 
             .effect-group {
                 margin-bottom: 12px;

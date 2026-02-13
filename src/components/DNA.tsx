@@ -24,15 +24,17 @@ const DNA: React.FC = () => {
                 justifyContent: "center",
                 alignItems: "center",
                 height: "100%",
-                perspective: "800px"
+                width: "100%",
+                perspective: "1000px",
+                overflow: "hidden"
             }}
         >
-            <section 
+            <div
                 className="blueprint"
                 style={{
                     position: 'relative',
                     width: "300px",
-                    height: "800px",
+                    height: "100%",
                     transformStyle: "preserve-3d"
                 }}
             >
@@ -48,15 +50,15 @@ const DNA: React.FC = () => {
                             background: "linear-gradient( #1e481f, #2f6f30 )",
                             borderRadius: "50px",
                             left: "0",
-                            top: "calc(var(--index) * 20px)",                           
+                            top: `calc(${i} * 15px)`,                           
                             transformStyle: "preserve-3d",
-                            animationDelay: "calc(var(--index) * -0.2s)"
+                            animationDelay: `calc(${i} * -0.2s)`
                         } as React.CSSProperties}
                     />
                 ))}
-            </section>
+            </div>
         </section>
     );
 };
 
-export default DNA;
+export default DNA

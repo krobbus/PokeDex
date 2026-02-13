@@ -15,21 +15,18 @@ export interface PokemonProps {
 export interface ExtendedPokemonProps extends PokemonProps {
   abilities: string[];
   description: string;
-  stats: string[];
+  stats: { name: string; value: number }[];
   height: number;
   weight: number;
+  evolutionUrl: string;
 };
 
 export interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   pokemon: ExtendedPokemonProps | null;
+  onSelectNewPokemon: (name: string) => void;
 };
-
-export interface UrlProps {
-  evolutionUrl: string;
-  openModal: (pokemon: any) => void;
-}
 
 export const PokemonTypeColors: Record<string, string> = {
   grass: '#78C850',
@@ -78,23 +75,28 @@ export const PokemonTypeChart: Record<string, TypeRelation> = {
   water: { strengths: ['fire', 'ground', 'rock'], weaknesses: ['electric', 'grass'] }
 };
 
-export const calculateEffectiveness = (types: string[]) => {
+export const calculateEffectiveness = (types: string[]): Record<string, number> => {
   const multipliers: Record<string, number> = {};
 
   Object.keys(PokemonTypeChart).forEach(type => {
     multipliers[type] = 1;
   });
 
-  types.forEach(pokemonType => {
-    const typeLower = pokemonType.toLowerCase();
+  if (!types || !Array.isArray(types)) {
+    return multipliers;
+  }
+
+  types.forEach((typeName) => {
+    const typeLower = typeName.toLowerCase();
     const data = PokemonTypeChart[typeLower];
 
     if (data) {
       data.weaknesses.forEach(w => {
-        multipliers[w] *= 2;
+        if (multipliers[w] !== undefined) multipliers[w] *= 2;
       });
+      
       data.strengths.forEach(s => {
-        multipliers[s] *= 0.5;
+        if (multipliers[s] !== undefined) multipliers[s] *= 0.5;
       });
     }
   });

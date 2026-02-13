@@ -1,17 +1,29 @@
 import React from 'react';
+import logo from '/pokedex-logo.png';
 import { PokemonTypeColors } from './types.ts';
 import type { ModalProps } from './types.ts';
 import { calculateEffectiveness } from './types';
 import './css/pokemon-modal-styles.css';
-import logo from '/pokedex-logo.png';
+import PokemonEvolution from './PokemonEvolution';
 
-const PokemonModal: React.FC<ModalProps> = ({ isOpen, onClose, pokemon }) => {
-    if (!isOpen || !pokemon) return;
+const PokemonModal: React.FC<ModalProps> = ({ isOpen, onClose, pokemon, onSelectNewPokemon }) => {
+    if (!isOpen || !pokemon) return null;
+
+    if (!pokemon.types) {
+        return (
+            <div className="modalOverlay">
+                <div className="modalBox">
+                    <p>SCANNING GENETIC DATA...</p>
+                </div>
+            </div>
+        );
+    }
 
     const effectiveness = calculateEffectiveness(pokemon.types);
     const doubleWeak = Object.keys(effectiveness).filter(t => effectiveness[t] === 4);
     const weak = Object.keys(effectiveness).filter(t => effectiveness[t] === 2);
-    const resist = Object.keys(effectiveness).filter(t => effectiveness[t] <= 0.5);
+    const resist = Object.keys(effectiveness).filter(t => effectiveness[t] < 1 && effectiveness[t] > 0);
+    const immune = Object.keys(effectiveness).filter(t => effectiveness[t] === 0);
 
     const getBackground = () => {
         if (!pokemon || !pokemon.types || pokemon.types.length === 2) {
@@ -31,32 +43,32 @@ const PokemonModal: React.FC<ModalProps> = ({ isOpen, onClose, pokemon }) => {
 
     return (
         <section className="modalOverlay" onClick={onClose}>
-            <section 
+            <div
                 className="modalBox" 
                 onClick={(e) => e.stopPropagation()} 
                 style={{ background: getBackground() }}
             >
                 <button className="close-btn" onClick={onClose}>X</button>
 
-                <section className="modalContent">
+                <div className="modalContent">
                     <header>
-                        <span>{pokemon.name.toUpperCase()}</span>
-                        <span>SCAN ID: #{pokemon.id.toString().padStart(4, '0')}</span>
+                        <span>{pokemon.name?.toUpperCase() || "LOADING..."}</span>
+                        <span>SCAN ID: #{pokemon.id.toString().padStart(4, '0') || "????"}</span>
                     </header>
 
-                    <section id="modalPokemonDescription">
-                        <section id="modalImgContainer">
+                    <div id="modalPokemonDescription">
+                        <div id="modalImgContainer">
                             <img src={pokemon.image || logo} alt={pokemon.name} />
-                        </section>
+                        </div>
 
-                        <section id="modalDescriptionContainer">
+                        <div id="modalDescriptionContainer">
                             <h3>DESCRIPTION</h3>
                             <p>{pokemon.description || "NO DATA FOUND IN DATABASE."}</p>
-                        </section>
-                    </section>
+                        </div>
+                    </div>
 
-                    <section id="modalGrid">
-                        <section id="grid1" className="gridItem">
+                    <div id="modalGrid">
+                        <div id="grid1" className="gridItem">
                             <h3>BASE STATS</h3>
                             <ul>
                                 {pokemon.stats?.map((s: any) => {
@@ -80,17 +92,17 @@ const PokemonModal: React.FC<ModalProps> = ({ isOpen, onClose, pokemon }) => {
                                     );
                                 })}
                             </ul>
-                        </section>
+                        </div>
                         
-                        <section id="grid2" className="gridItem">
+                        <div id="grid2" className="gridItem">
                             <h3>MEASUREMENT</h3>
                             <ul>
                                 <li><span>HEIGHT:</span> <span>{pokemon.height / 10} m</span></li>
                                 <li><span>WEIGHT:</span> <span>{pokemon.weight / 10} kg</span></li>
                             </ul>
-                        </section>
+                        </div>
 
-                        <section id="grid3" className="gridItem">
+                        <div id="grid3" className="gridItem">
                             <h3>ABILITIES</h3>
                             <ul>
                                 {pokemon.abilities?.filter(Boolean).map((a: string, index: number) => (
@@ -100,70 +112,88 @@ const PokemonModal: React.FC<ModalProps> = ({ isOpen, onClose, pokemon }) => {
                                     </li>
                                 ))}
                             </ul>
-                        </section>
+                        </div>
 
-                        <section id="grid4" className="gridItem">
+                        <div id="grid4" className="gridItem">
                             <h3>TYPE</h3>
-                            <section className="type-list">
+                            <div className="type-list">
                                 {pokemon.types?.filter(Boolean).map((t: string) => (
                                     <span key={t} className="mini-type-badge" style={{ backgroundColor: PokemonTypeColors[t] }}>
                                         {t.toUpperCase()}
                                     </span>
                                 ))}
-                            </section>
-                        </section>
+                            </div>
+                        </div>
 
-                        <section id="grid5" className="gridItem">
+                        <div id="grid5" className="gridItem">
                             <h3>CRY</h3>
                             <button className="cry-btn" onClick={playCry}>
                                 <img src="./src/assets/audio-icon.png" alt="audio icon" />
                             </button>
-                        </section>
+                        </div>
 
-                        <section id="grid6" className="gridItem">
+                        <div id="grid6" className="gridItem">
                             <h3>BATTLE ANALYSIS</h3>
                             
                             {doubleWeak.length > 0 && (
-                                <section className="effect-group">
+                                <div className="effect-group">
                                     <p className="multiplier-label x4">4x DAMAGE (CRITICAL)</p>
                                     
-                                    <section className="type-list">
+                                    <div className="type-list">
                                         {doubleWeak.map(t => (
                                             <span key={t} className="mini-type-badge" style={{ backgroundColor: PokemonTypeColors[t] }}>
                                                 {t.toUpperCase()}
                                             </span>
                                         ))}
-                                    </section>
-                                </section>
+                                    </div>
+                                </div>
                             )}
 
-                            <section className="effect-group">
+                            <div className="effect-group">
                                 <p className="multiplier-label x2">2x DAMAGE (WEAK)</p>
 
-                                <section className="type-list">
+                                <div className="type-list">
                                     {weak.map(t => (
                                         <span key={t} className="mini-type-badge" style={{ backgroundColor: PokemonTypeColors[t] }}>
                                             {t.toUpperCase()}
                                         </span>
                                     ))}
-                                </section>
-                            </section>
+                                </div>
+                            </div>
 
-                            <section className="effect-group">
+                            <div className="effect-group">
                                 <p className="multiplier-label half">RESISTANT TO</p>
 
-                                <section className="type-list">
+                                <div className="type-list">
                                     {resist.map(t => (
                                         <span key={t} className="mini-type-badge" style={{ backgroundColor: PokemonTypeColors[t] }}>
                                             {t.toUpperCase()}
                                         </span>
                                     ))}
-                                </section>
-                            </section>
-                        </section>
-                    </section>
-                </section>
-            </section>
+                                </div>
+                            </div>
+
+                            <div className="effect-group">
+                                <p className="multiplier-label none">IMMUNE TO</p>
+
+                                <div className="type-list">
+                                    {immune.map(t => (
+                                        <span key={t} className="mini-type-badge" style={{ backgroundColor: PokemonTypeColors[t] }}>
+                                            {t.toUpperCase()}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <PokemonEvolution
+                        evolutionUrl={pokemon.evolutionUrl || ''}
+                        typeBackground={getBackground()}
+                        onSelectNewPokemon={onSelectNewPokemon}
+                    />
+                </div>
+            </div>
         </section>
     );
 };

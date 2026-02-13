@@ -41,24 +41,24 @@ const PokemonCard: React.FC<PokemonProps & { onClick: () => void }> = ({ id, nam
         >
             {isShiny && <span className="shiny-sparkle">✦</span>}
 
-            <section id="headerStyle">
+            <div id="headerStyle">
                 <span id="idStyle">{formattedId}</span>
                 <span id="hpStyle">{hp} HP</span>
-            </section>
+            </div>
 
             <h3 id="nameStyle">{name}</h3>
         
-            <section id="imageContainerStyle">
+            <div id="imageContainerStyle">
                 <img style={{ width: '120px' }} src={image} alt={name} />
-            </section>
+            </div>
 
-            <section id="typeContainerStyle">
+            <div id="typeContainerStyle">
                 {types.map((type) => (
                     <span key={type} id="typeBadgeStyle" style={{ background: PokemonTypeColors[type] }}>
                         {type}
                     </span>
                 ))}
-            </section>
+            </div>
         </section>
     );
 };

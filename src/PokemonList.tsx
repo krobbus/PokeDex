@@ -3,7 +3,6 @@ import './css/pokemon-list-styles.css';
 
 import PokemonCard from './PokemonCard';
 import PokemonModal from './PokemonModal';
-import PokemonEvolution from './PokemonEvolution';
 import Footer from './Footer';
 
 import type { PokemonProps } from './types';
@@ -42,14 +41,25 @@ const PokemonList: React.FC = () => {
   })();
 
   const handleOpenModal = async (pokemon: any) => {
-    setSelectedPokemon(pokemon);
+    const searchId = pokemon.id || pokemon;
+    const searchTarget = typeof pokemon === 'string' ? pokemon : pokemon.id;
+
+    if (!searchTarget) return;
+
+    setSelectedPokemon({ 
+      name: typeof searchId === 'string' ? searchId : pokemon.name, 
+      id: typeof searchId === 'number' ? searchId : '...',
+      types: null
+    });
+
     setListLoading(true);
+    setIsModalOpen(true);
     setError('');
 
     try {
       const [speciesRes, detailRes] = await Promise.all([
-        fetch(`https://pokeapi.co/api/v2/pokemon-species/${pokemon.id}/`),
-        fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.id}/`)
+        fetch(`https://pokeapi.co/api/v2/pokemon-species/${searchTarget}/`),
+        fetch(`https://pokeapi.co/api/v2/pokemon/${searchTarget}/`)
       ]);
       if (!speciesRes.ok || !detailRes.ok) throw new Error("Data retrieval failed.");
 
@@ -61,7 +71,10 @@ const PokemonList: React.FC = () => {
       )?.flavor_text.replace(/[\f\n\r]/gm, " ");
 
       setSelectedPokemon({
-        ...pokemon,
+        id: detailData.id,
+        name: detailData.name,
+        image: detailData.sprites.front_default,
+        shinyImage: detailData.sprites.front_shiny,
         types: detailData.types.map((t: any) => t.type.name),
         abilities: detailData.abilities.map((a: any) => a.ability.name),
         description: description,
@@ -73,11 +86,10 @@ const PokemonList: React.FC = () => {
         })),
         evolutionUrl: speciesData.evolution_chain.url
       });
-      
-      setListLoading(false);
-      setIsModalOpen(true);
     } catch (err) {
       console.error("Failed to load details", err);
+    } finally {
+      setListLoading(false);
     }
   };
 
@@ -211,27 +223,26 @@ const PokemonList: React.FC = () => {
 
   return (
     <>
-      <section id="navContainer">
-        <nav id="navStyle">
+      <nav id="navContainer">
+        <div id="navStyle">
           <a href={'#navStyle'}><img id="navLogo" src={logo} /></a>
           
           <ul id="navUlStyle">
             <li><a href={'#flexStyle'}>Home</a></li>
-            <li><a href={'#evolutionContainer'}>Evolution</a></li>
             <li><a href={'#shinyToggleBtn'}>Spot the Shiny</a></li>
             <li><a href={'#footerContainer'}>About</a></li>
             <li id="logout"><a href={'./PokemonIntro'}>Go Back</a></li>
           </ul>
-        </nav>
-      </section>
+        </div>
+      </nav>
       
       <section id="flexStyle">
-        <section id="header">
+        <main id="header">
           <h1>POKEDEX</h1>
           <h5>Current Version Loaded: v{currentVersion}. Encounters logged: {totalPokemon}.</h5>
-        </section>
+        </main>
 
-        <section id="searchContainerStyle">
+        <div id="searchContainerStyle">
           <input 
             id="inputStyle"
             type="text" 
@@ -250,13 +261,13 @@ const PokemonList: React.FC = () => {
               CLEAR 
             </button>
           )}
-        </section>
+        </div>
 
         {error && <p style={{ color: 'red', fontFamily: "'Press Start 2P', cursive", marginBottom: '10px'}}>{error}</p>}
 
         {!loading && !searchResult && (
-          <section id="searchFilterField">
-            <section id="paginationContainer">
+          <div id="searchFilterField">
+            <div id="paginationContainer">
               <button 
                 disabled={offset === 0} 
                 onClick={() => handlePageChange('prev')}
@@ -266,7 +277,7 @@ const PokemonList: React.FC = () => {
                 PREV
               </button>
               
-              <section id="pageIndicatorStyle">
+              <div id="pageIndicatorStyle">
                 PAGE 
                 <input 
                   id="pageInputStyle"
@@ -277,13 +288,14 @@ const PokemonList: React.FC = () => {
                   onBlur={handlePageInputSubmit}
                 />
                 <span>/{maxPage}</span>
-              </section>
+              </div>
               
               <button onClick={() => handlePageChange('next')} id="pageButtonStyle"> NEXT </button>
-            </section>
+            </div>
 
-            <section id="filterContainer">
+            <div id="filterContainer">
               <img src={filterIcon} id="inner-filter-icon" alt="filter icon" />
+
               <select id="filterSelection" value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
                 <option value="lowest">Lowest ID First</option>
                 <option value="highest">Highest ID First</option>
@@ -292,18 +304,19 @@ const PokemonList: React.FC = () => {
               </select>
 
               <img 
-                src={`./src/assets/type-icons/${sortTypeBy}.svg`} 
+                src={`/assets/type-icons/${sortTypeBy}.svg`} 
                 id="inner-type-icon" 
                 style={{display: sortTypeBy === 'all' ? 'none' : 'block'}}
                 onError={(e) => { e.currentTarget.style.display = 'none'; }}
                 alt={`${sortTypeBy} icon`} 
               />
+
               <select 
                 id="filterTypeSelection" 
                 style={{ paddingLeft: sortTypeBy === 'all' ? '10px' : '50px' }}
                 value={sortTypeBy} 
                 onChange={(e) => setTypeSortBy(e.target.value)}
-                >
+              >
                 <option value="all">All Types</option>
                 <option value="bug">Bug Type</option>
                 <option value="dark">Dark Type</option>
@@ -323,8 +336,8 @@ const PokemonList: React.FC = () => {
                 <option value="steel">Steel Type</option>
                 <option value="water">Water Type</option>
               </select>
-            </section>
-          </section>
+            </div>
+          </div>
         )}
 
         <button 
@@ -338,7 +351,7 @@ const PokemonList: React.FC = () => {
         {listLoading && <p style={{ color: 'white', fontFamily: "'Press Start 2P', cursive", marginBottom: '10px'}}>SCANNING POKEMON DETAILS, TRAINER PLEASE WAIT...</p>}
         {loading && <p style={{ color: 'white', fontFamily: "'Press Start 2P', cursive", marginBottom: '10px' }}>SEARCHING TALL GRASS...</p>}
 
-        <section id="gridStyle" style={{ opacity: loading ? 0.5 : 1 }}>
+        <div id="gridStyle" style={{ opacity: loading ? 0.5 : 1 }}>
           {searchResult ? (
             <PokemonCard 
               id={searchResult.id} 
@@ -362,38 +375,28 @@ const PokemonList: React.FC = () => {
               ))
             ) : (
               !loading && (
-                <section style={{ textAlign: 'center', gridColumn: '1 / -1' }}>
+                <div style={{ textAlign: 'center', gridColumn: '1 / -1' }}>
                   <p style={{ fontFamily: "'Press Start 2P', cursive", marginTop: "4rem" }}>
                     NO {sortTypeBy.toUpperCase()} TYPES SPOTTED ON THIS PAGE.
                   </p><br />
                   <p>TRY CHANGING THE PAGE OR FILTER, TRAINER.</p>
-                </section>
+                </div>
               )
             )
           )}
-        </section>
-
-        {!selectedPokemon && <p style={{ color: 'white', textAlign: 'center', fontFamily: "'Press Start 2P', cursive", margin: '20px 0', lineHeight: '2' }}> 
-          CLICK ONE POKEMON CARD TO REVEAL ITS EVOLUTION<br />AFTER CLICKING, CLOSE THE MODAL AND RETURN HERE
-        </p>}
+        </div>
       </section>
-      
-      {selectedPokemon && (
-        <PokemonEvolution
-          evolutionUrl={selectedPokemon.evolutionUrl || ''}
-          openModal={handleOpenModal}
-        />
-      )}
 
       <Footer />
 
       <PokemonModal
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)} 
-        pokemon={selectedPokemon} 
+        pokemon={selectedPokemon}
+        onSelectNewPokemon={(name) => handleOpenModal(name)}
       />
     </>
   );
 };
 
-export default PokemonList;
+export default PokemonList
