@@ -47,7 +47,7 @@ const DNA: React.FC = () => {
                             position: "absolute",
                             height: "6px",
                             width: "100%",
-                            background: "linear-gradient( #1e481f, #2f6f30 )",
+                            background: "linear-gradient( #ffffff, #6d6d6d )",
                             borderRadius: "50px",
                             left: "0",
                             top: `calc(${i} * 15px)`,                           

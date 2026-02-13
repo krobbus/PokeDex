@@ -41,7 +41,6 @@
             left: 5px;
             height: calc(100% - 10px);
             width: calc(100% - 10px);
-            margin: 0 auto;
 
             display: flex;
             flex-direction: column;

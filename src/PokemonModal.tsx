@@ -23,13 +23,15 @@ const PokemonModal: React.FC<ModalProps> = ({ isOpen, onClose, pokemon, onSelect
     const doubleWeak = Object.keys(effectiveness).filter(t => effectiveness[t] === 4);
     const weak = Object.keys(effectiveness).filter(t => effectiveness[t] === 2);
     const resist = Object.keys(effectiveness).filter(t => effectiveness[t] < 1 && effectiveness[t] > 0);
-    const immune = Object.keys(effectiveness).filter(t => effectiveness[t] === 0);
 
     const getBackground = () => {
         if (!pokemon || !pokemon.types || pokemon.types.length === 2) {
             const color1 = PokemonTypeColors[pokemon.types[0]] || '#A8A878';
             const color2 = PokemonTypeColors[pokemon.types[1]] || '#A8A878';
-            return `linear-gradient(135deg, ${color1}, ${color2})`;
+            const overlay = "linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3))";
+            const baseGradient = `linear-gradient(135deg, ${color1}, ${color2})`;
+
+            return `${overlay}, ${baseGradient}`;
         }
         return PokemonTypeColors[pokemon.types[0]] || '#A8A878';
     };
@@ -166,18 +168,6 @@ const PokemonModal: React.FC<ModalProps> = ({ isOpen, onClose, pokemon, onSelect
 
                                 <div className="type-list">
                                     {resist.map(t => (
-                                        <span key={t} className="mini-type-badge" style={{ backgroundColor: PokemonTypeColors[t] }}>
-                                            {t.toUpperCase()}
-                                        </span>
-                                    ))}
-                                </div>
-                            </div>
-
-                            <div className="effect-group">
-                                <p className="multiplier-label none">IMMUNE TO</p>
-
-                                <div className="type-list">
-                                    {immune.map(t => (
                                         <span key={t} className="mini-type-badge" style={{ backgroundColor: PokemonTypeColors[t] }}>
                                             {t.toUpperCase()}
                                         </span>
