@@ -75,35 +75,13 @@ const PokemonIntro: React.FC<IntroProps> = ({ onComplete }) => {
 
             {!isBooting && (
                 <>
-                    <p 
-                        style={{ 
-                            color: "white", 
-                            textAlign: "center",
-                            textShadow: "1px 1px black",
-                            fontFamily: "'Press Start 2P', cursive",
-                            position: "absolute",
-                            bottom: "22%",
-                            width: "100%",
-                        }}>
-                        PRESS ANY KEY TO BOOT POKEDEX
-                    </p>
+                    <p id="hint">PRESS ANY KEY TO BOOT POKEDEX</p>
 
-                    <h6 
-                        style={{ 
-                            color: "white", 
-                            textAlign: "center",
-                            textShadow: "1px 1px black",
-                            fontFamily: "'Press Start 2P', cursive",
-                            position: "absolute",
-                            left: "50%",
-                            transform: "translate(-50%, 0)",
-                            bottom: "2%",
-                            width: "80%",
-                        }}>
+                    <footer>
                         &copy; 2026 by Alef Justin Loresca. Pokémon names, images, and related media are trademarks and copyrights of 
-                        Nintendo, Game Freak, and Creatures.. This project is intended under "Fair Use" for educational purposes. 
+                        Nintendo, Game Freak, and Creatures. This project is intended under "Fair Use" for educational purposes. 
                         No copyright infringement is intended
-                    </h6>
+                    </footer>
                 </>
             )}
         </section>

@@ -14,7 +14,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        z-index: 99;
+        z-index: 9;
 
         #pokedexImg{
             height: 200px;
@@ -49,6 +49,29 @@
     }
 }
 
+#hint{
+    color: #ffffff;
+    text-align: center;
+    text-shadow: 1px 1px #000000;
+    font-family: "Press Start 2P", cursive;
+    position: absolute;
+    bottom: 22%;
+    width: 100%;
+    z-index: 99;
+}
+
+footer{
+    font-size: 8px;
+    color: #000000; 
+    text-align: center;
+    font-family: "Press Start 2P", cursive;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+    bottom: 2%;
+    width: 80%;
+}
+
 #blackoutAnim{
     position: fixed;
     inset: 0;
@@ -56,4 +79,79 @@
     z-index: 100;
     transition: opacity 1.5s ease-in-out;
     overflow: hidden;
+}
+
+@media screen and (max-width: 1024px){
+    #introContainer{
+        #pokedexImgContainer{
+            #pokedexImg{
+                height: 100px;
+            }
+        }
+
+        #pokeTableContainer{
+            #pokeTable{
+                height: 400px;
+            }
+        }
+    }
+
+    footer{
+        line-height: 1rem;
+        font-size: 6px;
+    }
+}
+
+@media screen and (max-width: 760px){
+    #introContainer{
+        #pokedexImgContainer{
+            #pokedexImg{
+                height: 80px;
+            }
+        }
+
+        #pokeTableContainer{
+            #pokeTable{
+                height: 300px;
+            }
+        }
+    }
+
+    #hint{
+        font-size: 0.8rem;
+    }
+
+    footer{
+        line-height: 1rem;
+        font-size: 4px;
+        width: 60%;
+    }
+}
+
+@media screen and (max-width: 480px){
+    #introContainer{
+        #pokedexImgContainer{
+            top: 45%;
+
+            #pokedexImg{
+                height: 60px;
+            }
+        }
+
+        #pokeTableContainer{
+            #pokeTable{
+                height: 200px;
+            }
+        }
+    }
+
+    #hint{
+        font-size: 0.6rem;
+    }
+
+    footer{
+        line-height: 1rem;
+        font-size: 2px;
+        width: 60%;
+    }
 }
