@@ -128,7 +128,7 @@ footer{
     }
 }
 
-@media screen and (max-width: 480px){
+@media screen and (max-width: 400px){
     #introContainer{
         #pokedexImgContainer{
             top: 45%;
@@ -150,7 +150,7 @@ footer{
     }
 
     footer{
-        line-height: 1rem;
+        line-height: 10px;
         font-size: 2px;
         width: 60%;
     }
