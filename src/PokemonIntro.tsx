@@ -44,7 +44,46 @@ const PokemonIntro: React.FC<IntroProps> = ({ onComplete }) => {
 
     return (
         <section id="introContainer">
-            <section
+            <div id="pokedexLogoContainer">
+                <img src="/pokedex-logo.png" id="pokedexLogo" alt="pokedex logo" />
+            </div>
+
+            <div id="introComponents">
+                <div
+                    id="pokedexImgContainer"
+                    onTransitionEnd={handleAnimationEnd}
+                    style={{ 
+                        transform: isBooting 
+                            ? "translate(450%, 50%) scale(20) rotate(0deg)"
+                            : "translate(-50%, -50%) scale(1) rotate(-30deg)"
+                    }}
+                >
+                    <img src="./src/assets/pokedex.svg" id="pokedexImg" alt="pokedex component" />
+                </div>
+
+                <div id="pokeTableContainer">
+                    <img src="./src/assets/intro-table.png" id="pokeTable" alt="table that have full of pokeballs" />
+                </div>
+            </div>
+
+            <div 
+                id="introSubText"
+                style={{ 
+                    opacity: isBooting ? 0 : 1, 
+                    transition: 'opacity 0.8s ease',
+                    visibility: isBooting ? 'hidden' : 'visible'
+                }}
+            >
+                <p id="hint">PRESS ANY KEY TO BOOT</p>
+
+                <footer>
+                    &copy; 2026 by Alef Justin Loresca. Pokémon names, images, and related media are trademarks and copyrights of 
+                    Nintendo, Game Freak, and Creatures. This project is intended under "Fair Use" for educational purposes. 
+                    No copyright infringement is intended
+                </footer>
+            </div>
+
+            <div
                 id="blackoutAnim"
                 onTransitionEnd={handleAnimationEnd}
                 style={{
@@ -52,38 +91,6 @@ const PokemonIntro: React.FC<IntroProps> = ({ onComplete }) => {
                     pointerEvents: isBlackout ? "all" : "none"
                 }} 
             />
-
-            <section 
-                id="pokedexImgContainer"
-                onTransitionEnd={handleAnimationEnd}
-                style={{ 
-                    transform: isBooting 
-                        ? "translate(480%, -10%) scale(20) rotate(0deg)"
-                        : "translate(-50%, -50%) scale(1) rotate(-30deg)"
-                }}
-            >
-                <img src="./src/assets/pokedex.svg" id="pokedexImg" alt="pokedex component" />
-            </section>
-
-            <section id="pokeTableContainer">
-                <img src="./src/assets/intro-table.png" id="pokeTable" alt="table that have full of pokeballs" />
-            </section>
-
-            <section id="pokedexLogoContainer">
-                <img src="/pokedex-logo.png" id="pokedexLogo" alt="pokedex logo" />
-            </section>
-
-            {!isBooting && (
-                <>
-                    <p id="hint">PRESS ANY KEY TO BOOT POKEDEX</p>
-
-                    <footer>
-                        &copy; 2026 by Alef Justin Loresca. Pokémon names, images, and related media are trademarks and copyrights of 
-                        Nintendo, Game Freak, and Creatures. This project is intended under "Fair Use" for educational purposes. 
-                        No copyright infringement is intended
-                    </footer>
-                </>
-            )}
         </section>
     );
 }
