@@ -28,7 +28,7 @@ const PokemonModal: React.FC<ModalProps> = ({ isOpen, onClose, pokemon, onSelect
     const resist = Object.keys(effectiveness).filter(t => effectiveness[t] < 1 && effectiveness[t] > 0);
 
     const getBackground = () => {
-        if (!pokemon || !pokemon.types || pokemon.types.length === 0) {
+        if (!pokemon || !pokemon.types) {
             return '#A8A878';
         }
 
