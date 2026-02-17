@@ -48,6 +48,16 @@ const PokemonIntro: React.FC<IntroProps> = ({ onComplete }) => {
                 <img src="/pokedex-logo.png" id="pokedexLogo" alt="pokedex logo" />
             </div>
 
+            <h1
+                style={{ 
+                    opacity: isBooting ? 0 : 1, 
+                    transition: 'opacity 0.8s ease',
+                    visibility: isBooting ? 'hidden' : 'visible'
+                }}
+            >
+                WELCOME TO POKEMON RESEARCH LAB
+            </h1>
+
             <div id="introComponents">
                 <div
                     id="pokedexImgContainer"

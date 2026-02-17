@@ -208,6 +208,8 @@ const PokemonModal: React.FC<ModalProps> = ({ isOpen, onClose, pokemon, onSelect
                         </div>
                     </div>
 
+                    <h2>EVOLUTION</h2>
+
                     <PokemonEvolution
                         evolutionUrl={pokemon.evolutionUrl || ''}
                         typeBackground={getBackground()}

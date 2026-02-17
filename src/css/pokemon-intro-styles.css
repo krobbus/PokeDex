@@ -21,6 +21,14 @@
         }
     }
 
+    h1{
+        text-align: center;
+        text-shadow: 2px 2px #000000;
+        filter: drop-shadow(0 0 20px #000000);
+        line-height: 2rem;
+        z-index: 99;
+    }
+
     #introComponents{
         position: relative; 
         flex: 1;

@@ -97,6 +97,7 @@
         grid-template-columns: 1fr, 1fr;
         gap: 20px;
         width: 100%;
+        margin-bottom: 4rem;
 
         .gridItem {
             background: rgba(255, 255, 255, 0.1);
@@ -207,6 +208,12 @@
         #grid5{ grid-area: 3 / 2 / 4 / 3; }
 
         #grid6{ grid-area: 4 / 1 / 5 / 3; }
+    }
+
+    h2{
+        text-align: center;
+        text-shadow: 2px 2px #000000;
+        margin-bottom: 1rem;
     }
 }
 
