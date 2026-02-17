@@ -1,11 +1,14 @@
 import React, {} from 'react';
 import './css/footer-styles.css';
 
+import githubLogo from './assets/github-logo.png';
+import pokeballIcon from './assets/pokeball-icon.png';
+
 const Footer: React.FC = () => {
     return(
         <section id="footerContainer">
             <div id="footerDescription">
-                <img src="./public/pokedex-logo.png" alt="pokedex logo" />
+                <img src="/pokedex-logo.png" alt="pokedex logo" />
 
                 <h4>
                     It focuses exclusively on the core PokeDex structure (designed as data-reference tool for the list of Pokemon. 
@@ -16,11 +19,11 @@ const Footer: React.FC = () => {
 
             <ul>
                 <li><a href="https://github.com/krobbus/PokeDex/blob/main/README.md">
-                    <img src="./src/assets/github-logo.png" alt="github logo" /></a>
+                    <img src={githubLogo} alt="github logo" /></a>
                 </li>
 
                 <li><a href="https://www.pokemon.com/us/pokedex">
-                    <img src="./src/assets/pokeball-icon.png" alt="pokedex logo" /></a>
+                    <img src={pokeballIcon} alt="pokedex logo" /></a>
                 </li>
             </ul>
 
