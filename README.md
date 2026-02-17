@@ -21,17 +21,26 @@ This Home Page is limited to a simple display list, this update ensures every pi
 * **Adaptive UI:** Custom icons that automatically update based on the selected Pokémon type.
 * **Error Handling:** Robust fallbacks for missing sprites and empty filter results.
 
+<img width="1919" height="872" alt="image" src="https://github.com/user-attachments/assets/adba9271-8235-465a-a466-c62a7a193052" />
+Landpage with animation (transition to homepage) when interact/clicking any keys
+
+<img width="1919" height="867" alt="image" src="https://github.com/user-attachments/assets/36d301f6-cfe5-48cd-8b0e-4239f83f7983" />
+<img width="1919" height="860" alt="image" src="https://github.com/user-attachments/assets/20a99e97-6198-463d-9b8c-061d89412b0f" />
+<img width="1919" height="864" alt="image" src="https://github.com/user-attachments/assets/cbc1d85b-4e00-4a0b-9d51-00b7f8559d65" />
+Homepage with many features including search & filter, pagination, card gallery display, modal box (display the pokemon characteristics), evolution display, and "spot the shiny" feature
+
 ## Tech Stack
 
-* **Framework:** React 18
-* **Language:** TypeScript
+* **Framework & Language:** React + TypeScript
 * **API:** [PokeAPI](https://pokeapi.co/)
 * **Styles:** Custom CSS3 (Grid & Flexbox)
 
 ## Installation & Setup
 
 1. **Project Structure Requirements:**
+* **/src/assets/** contains *other .png, .jpg, .gif, .svg files*
 * **/src/assets/type-icons/** contains *.svg files; ex. fire.svg, bug.svg, ...*
+* **/src/components/** contains *DNA.tsx*
 * **/public/** contains *pokedex-logo.png*
 
 2. **Clone the repository:**
