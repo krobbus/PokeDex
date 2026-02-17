@@ -47,7 +47,7 @@ const PokemonModal: React.FC<ModalProps> = ({ isOpen, onClose, pokemon, onSelect
         if (pokemon.types.length === 2) {
             return `${darken}, linear-gradient(135deg, ${color1}, ${color2})`;
         }
-        return `${darken}, ${color1}`;
+        return color1 || color2;
     };
 
     const playCry = () => {
