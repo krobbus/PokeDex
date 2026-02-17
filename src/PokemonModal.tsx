@@ -34,6 +34,10 @@ const PokemonModal: React.FC<ModalProps> = ({ isOpen, onClose, pokemon, onSelect
                 return `linear-gradient(rgba(255, 217, 0, 0.2), rgba(255, 215, 0, 0.1)), ${baseGradient}`;
             }
 
+            if (pokemon.types.length === 1) {
+                return color1 || color2;
+            }
+
             if (pokemon.types.length === 2) {
                 const overlay = "linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3))";
                 const baseGradient = `linear-gradient(135deg, ${color1}, ${color2})`;
