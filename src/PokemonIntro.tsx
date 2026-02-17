@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import './css/pokemon-intro-styles.css';
 import type { IntroProps } from './types';
 
+import introBg from './assets/intro-bg.png';
+import pokedexSvg from './assets/pokedex.svg';
+import introTable from './assets/intro-table.png';
+
 const PokemonIntro: React.FC<IntroProps> = ({ onComplete }) => {
     const [isBooting, setIsBooting] = useState(false);
     const [isBlackout, setIsBlackout] = useState(false);
@@ -10,7 +14,7 @@ const PokemonIntro: React.FC<IntroProps> = ({ onComplete }) => {
         const root = document.documentElement;
         const originalBg = root.style.backgroundImage;
 
-        root.style.backgroundImage = "url('./src/assets/intro-bg.png')";
+        root.style.backgroundImage = `url(${introBg})`;
         root.style.backgroundSize = "stretch";
         root.style.backgroundAttachment = "fixed";
         root.style.backgroundRepeat = "repeat";
@@ -68,11 +72,11 @@ const PokemonIntro: React.FC<IntroProps> = ({ onComplete }) => {
                             : "translate(-50%, -50%) scale(1) rotate(-30deg)"
                     }}
                 >
-                    <img src="./src/assets/pokedex.svg" id="pokedexImg" alt="pokedex component" />
+                    <img src={pokedexSvg} id="pokedexImg" alt="pokedex component" />
                 </div>
 
                 <div id="pokeTableContainer">
-                    <img src="./src/assets/intro-table.png" id="pokeTable" alt="table that have full of pokeballs" />
+                    <img src={introTable} id="pokeTable" alt="table that have full of pokeballs" />
                 </div>
             </div>
 
