@@ -39,7 +39,7 @@ const PokemonModal: React.FC<ModalProps> = ({ isOpen, onClose, pokemon, onSelect
         if (pokemon.isShiny) {
             const shinyOverlay = "linear-gradient(rgba(255, 217, 0, 0.2), rgba(255, 215, 0, 0.1))";
             const base = pokemon.types.length === 1 
-                ? `${color1} `
+                ? `${color2}`
                 : `linear-gradient(135deg, ${color1}, ${color2})`;
             return `${shinyOverlay}, ${base}`;
         }
@@ -47,7 +47,7 @@ const PokemonModal: React.FC<ModalProps> = ({ isOpen, onClose, pokemon, onSelect
         if (pokemon.types.length === 2) {
             return `${darken}, linear-gradient(135deg, ${color1}, ${color2})`;
         }
-        return `${color1}`;
+        return `${color2}`;
     };
 
     const playCry = () => {
