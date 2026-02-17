@@ -28,10 +28,18 @@ const PokemonModal: React.FC<ModalProps> = ({ isOpen, onClose, pokemon, onSelect
         if (!pokemon || !pokemon.types || pokemon.types.length === 2) {
             const color1 = PokemonTypeColors[pokemon.types[0]] || '#A8A878';
             const color2 = PokemonTypeColors[pokemon.types[1]] || '#A8A878';
-            const overlay = "linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3))";
-            const baseGradient = `linear-gradient(135deg, ${color1}, ${color2})`;
 
-            return `${overlay}, ${baseGradient}`;
+            if (pokemon.isShiny) {
+                const baseGradient = `linear-gradient(135deg, ${color1}, ${color2})`;
+                return `linear-gradient(rgba(255, 217, 0, 0.2), rgba(255, 215, 0, 0.1)), ${baseGradient}`;
+            }
+
+            if (pokemon.types.length === 2) {
+                const overlay = "linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3))";
+                const baseGradient = `linear-gradient(135deg, ${color1}, ${color2})`;
+                return `${overlay}, ${baseGradient}`;
+            }
+            return color1;
         }
         return PokemonTypeColors[pokemon.types[0]] || '#A8A878';
     };
@@ -46,7 +54,7 @@ const PokemonModal: React.FC<ModalProps> = ({ isOpen, onClose, pokemon, onSelect
     return (
         <section className="modalOverlay" onClick={onClose}>
             <div
-                className="modalBox" 
+                className={`modalBox ${pokemon.isShiny ? 'shiny-border' : ''}`}
                 onClick={(e) => e.stopPropagation()} 
                 style={{ background: getBackground() }}
             >
@@ -54,13 +62,36 @@ const PokemonModal: React.FC<ModalProps> = ({ isOpen, onClose, pokemon, onSelect
 
                 <div className="modalContent">
                     <header>
-                        <span>{pokemon.name?.toUpperCase() || "LOADING..."}</span>
-                        <span>SCAN ID: #{pokemon.id.toString().padStart(4, '0') || "????"}</span>
+                        <span>
+                            {pokemon.isShiny && 
+                                <span 
+                                    style={{ 
+                                        color: '#ffd700',
+                                        marginRight: '15px',
+                                        textShadow: '2px 2px 0 #000000'
+                                    }}
+                                >
+                                    SHINY 
+                                </span>
+                            }
+                            {pokemon.name?.toUpperCase() || "LOADING..."}
+                        </span>
+                        <span 
+                            style={{
+                                color : pokemon.isShiny ? '#ffd900' : '#ffffff'
+                            }}
+                        >
+                            SCAN ID: #{pokemon.id.toString().padStart(4, '0') || "????"}
+                        </span>
                     </header>
 
                     <div id="modalPokemonDescription">
                         <div id="modalImgContainer">
-                            <img src={pokemon.image || logo} alt={pokemon.name} />
+                            <img 
+                                src={pokemon.image || logo} 
+                                alt={pokemon.name} 
+                                className={pokemon.isShiny ? "shiny-sparkle-anim" : ""}
+                            />
                         </div>
 
                         <div id="modalDescriptionContainer">
@@ -85,7 +116,7 @@ const PokemonModal: React.FC<ModalProps> = ({ isOpen, onClose, pokemon, onSelect
                                                     className="stat-bar-fill" 
                                                     style={{ 
                                                         width: `${percent}%`,
-                                                        backgroundColor: barColor,
+                                                        backgroundColor : pokemon.isShiny ? '#ffd700' : barColor,
                                                     }}
                                                 />
                                             </section>

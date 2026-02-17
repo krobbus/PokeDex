@@ -36,6 +36,7 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
+    align-items: center;
 
     li{
       list-style-type: none;
@@ -75,6 +76,18 @@
 
   @media (max-width: 1024px){
     ul{
+      height: 80px;
+      clip-path: polygon(
+        0 0, 
+        100% 0, 
+        100% 60px, 
+        200px 60px, 
+        190px 100%, 
+        30px 100%, 
+        20px 60px,
+        0 60px
+      );
+
       li{
         width: 150px;
 
@@ -87,6 +100,18 @@
 
   @media (max-width: 768px){
     ul{
+      height: 60px;
+      clip-path: polygon(
+        0 0, 
+        100% 0, 
+        100% 50px, 
+        200px 50px, 
+        190px 100%, 
+        30px 100%, 
+        20px 50px,
+        0 50px
+      );
+
       li{
         width: 100px;
 

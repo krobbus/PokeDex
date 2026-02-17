@@ -65,6 +65,9 @@ const PokemonList: React.FC = () => {
   const handleOpenModal = async (pokemon: any) => {
     const searchId = pokemon.id || pokemon;
     const searchTarget = typeof pokemon === 'string' ? pokemon : pokemon.id;
+    const isShinySelected = typeof pokemon === 'object' 
+      ? (isShinyMode && pokemon.isShiny) 
+      : false;
 
     if (!searchTarget) return;
 
@@ -95,8 +98,9 @@ const PokemonList: React.FC = () => {
       setSelectedPokemon({
         id: detailData.id,
         name: detailData.name,
-        image: detailData.sprites.front_default,
+        image: isShinySelected ? detailData.sprites.front_shiny : detailData.sprites.front_default,
         shinyImage: detailData.sprites.front_shiny,
+        isShiny: isShinySelected,
         types: detailData.types.map((t: any) => t.type.name),
         abilities: detailData.abilities.map((a: any) => a.ability.name),
         description: description,
