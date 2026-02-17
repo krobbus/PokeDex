@@ -1,6 +1,6 @@
 import React from 'react';
 import logo from '/pokedex-logo.png';
-import audioIcon from '/assets/audio-icon.png';
+import audioIcon from './assets/audio-icon.png';
 
 import { PokemonTypeColors } from './types.ts';
 import type { ModalProps } from './types.ts';
