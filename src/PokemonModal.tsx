@@ -29,31 +29,25 @@ const PokemonModal: React.FC<ModalProps> = ({ isOpen, onClose, pokemon, onSelect
 
     const getBackground = () => {
         if (!pokemon || !pokemon.types || pokemon.types.length === 0) {
-            const color1 = PokemonTypeColors[pokemon.types[0]] || '#A8A878';
-            const color2 = PokemonTypeColors[pokemon.types[1]] || color1;
-            const darken = "linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3))";
-
-            if (pokemon.isShiny) {
-                const shinyOverlay = "linear-gradient(rgba(255, 217, 0, 0.2), rgba(255, 215, 0, 0.1))";
-                if (pokemon.types.length === 1) {
-                    return `${shinyOverlay}, ${color1}`;
-                } else {
-                    const color2 = PokemonTypeColors[pokemon.types[1]] || color1;
-                    return `${shinyOverlay}, linear-gradient(135deg, ${color1}, ${color2})`;
-                }
-            }
-
-            if (pokemon.types.length === 1) {
-                return `${darken}, ${color1}`;
-            }
-
-            if (pokemon.types.length === 2) {
-                const baseGradient = `linear-gradient(135deg, ${color1}, ${color2})`;
-                return `${darken}, ${baseGradient}`;
-            }
-            return color1;
+            return '#A8A878';
         }
-        return PokemonTypeColors[pokemon.types[0]] || '#A8A878';
+
+        const color1 = PokemonTypeColors[pokemon.types[0]] || '#A8A878';
+        const color2 = PokemonTypeColors[pokemon.types[1]] || color1;
+        const darken = "linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3))";
+
+        if (pokemon.isShiny) {
+            const shinyOverlay = "linear-gradient(rgba(255, 217, 0, 0.2), rgba(255, 215, 0, 0.1))";
+            const base = pokemon.types.length === 1 
+                ? color1 
+                : `linear-gradient(135deg, ${color1}, ${color2})`;
+            return `${shinyOverlay}, ${base}`;
+        }
+            
+        if (pokemon.types.length === 2) {
+            return `${darken}, linear-gradient(135deg, ${color1}, ${color2})`;
+        }
+        return `${darken}, ${color1}`;
     };
 
     const playCry = () => {
