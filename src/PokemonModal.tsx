@@ -1,10 +1,13 @@
 import React from 'react';
 import logo from '/pokedex-logo.png';
+import audioIcon from '/assets/audio-icon.png';
+
 import { PokemonTypeColors } from './types.ts';
 import type { ModalProps } from './types.ts';
 import { calculateEffectiveness } from './types';
-import './css/pokemon-modal-styles.css';
 import PokemonEvolution from './PokemonEvolution';
+
+import './css/pokemon-modal-styles.css';
 
 const PokemonModal: React.FC<ModalProps> = ({ isOpen, onClose, pokemon, onSelectNewPokemon }) => {
     if (!isOpen || !pokemon) return null;
@@ -25,9 +28,9 @@ const PokemonModal: React.FC<ModalProps> = ({ isOpen, onClose, pokemon, onSelect
     const resist = Object.keys(effectiveness).filter(t => effectiveness[t] < 1 && effectiveness[t] > 0);
 
     const getBackground = () => {
-        if (!pokemon || !pokemon.types || pokemon.types.length === 2) {
+        if (!pokemon || !pokemon.types || pokemon.types.length === 0) {
             const color1 = PokemonTypeColors[pokemon.types[0]] || '#A8A878';
-            const color2 = PokemonTypeColors[pokemon.types[1]] || '#A8A878';
+            const color2 = PokemonTypeColors[pokemon.types[1]] || color1;
             const darken = "linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3))";
 
             if (pokemon.isShiny) {
@@ -170,7 +173,7 @@ const PokemonModal: React.FC<ModalProps> = ({ isOpen, onClose, pokemon, onSelect
                         <div id="grid5" className="gridItem">
                             <h3>CRY</h3>
                             <button className="cry-btn" onClick={playCry}>
-                                <img src="./src/assets/audio-icon.png" alt="audio icon" />
+                                <img src={audioIcon} alt="audio icon" />
                             </button>
                         </div>
 
