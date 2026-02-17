@@ -38,7 +38,9 @@ Homepage with many features including search & filter, pagination, card gallery 
 ## Installation & Setup
 
 1. **Project Structure Requirements:**
+* **/src/assets/** contains *other .png, .jpg, .gif, .svg files*
 * **/src/assets/type-icons/** contains *.svg files; ex. fire.svg, bug.svg, ...*
+* **/src/components/** contains *DNA.tsx*
 * **/public/** contains *pokedex-logo.png*
 
 2. **Clone the repository:**
