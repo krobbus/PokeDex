@@ -2,10 +2,10 @@
     background-image: linear-gradient(#59d05d, #47a54b, #224f23 );
     clip-path: polygon(
         0 0, 
-        60% 0, 
-        63% 5%, 
-        83% 5%, 
-        86% 0, 
+        50px 0, 
+        60px 5%, 
+        220px 5%, 
+        230px 0, 
         100% 0, 
         100% 100%, 
         0 100%
@@ -32,12 +32,12 @@
         align-items: center;
         gap: 2rem;
         text-align: justify;
-    }
-        
-    img{
-        height: 150px;
-        width: auto;
-        filter: drop-shadow(0 0 20px #000000);
+
+        img{
+            height: 150px;
+            width: auto;
+            filter: drop-shadow(0 0 20px #000000);
+        }
     }
 
     ul{
@@ -46,7 +46,6 @@
         gap: 1rem;
 
         li{
-            font-size: 1rem;
             list-style: none;
             transition: transform 0.2s ease-in-out;
             cursor: pointer;
@@ -61,6 +60,77 @@
                 filter: drop-shadow(0 0 20px #ffffff);
                 transform: translateY(-10px);
             }
+        }
+    }
+}
+
+@media (max-width: 1024px){
+    #footerContainer{
+        #footerDescription{
+            h4{
+                font-size: 0.8rem;
+            }
+        }
+
+        h6{
+            font-size: 0.4rem;
+        }
+    }
+}
+
+@media (max-width: 768px){
+    #footerContainer{
+        #footerDescription{
+            flex-direction: column;
+
+            img{
+                height: 150px;
+            }
+
+            h4{
+                font-size: 0.6rem;
+            }
+        }
+
+        ul{
+            li{
+                img{
+                    height: 40px;
+                }
+            }
+        }
+
+        h6{
+            font-size: 0.4rem;
+        }
+    }
+}
+
+@media (max-width: 425px){
+    #footerContainer{
+        #footerDescription{
+            flex-direction: column;
+
+            img{
+                height: 100px;
+            }
+
+            h4{
+                font-size: 0.4rem;
+            }
+        }
+
+        ul{
+            li{
+                img{
+                    height: 30px;
+                }
+            }
+        }
+
+        h6{
+            line-height: 1rem;
+            font-size: 0.2rem;
         }
     }
 }

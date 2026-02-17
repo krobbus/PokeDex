@@ -43,8 +43,8 @@ export const PokemonTypeColors: Record<string, string> = {
   rock: '#B8A038',
   ghost: '#705898',
   ice: '#98D8D8',
-  dragon: '#160505',
-  dark: '#5f5f5f',
+  dragon: '#fa3333',
+  dark: '#9b9b9b',
   steel: '#B8B8D0',
   flying: '#A890F0'
 };

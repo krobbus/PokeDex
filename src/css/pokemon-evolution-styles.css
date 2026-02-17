@@ -12,14 +12,14 @@
         position: relative;
         background: #ffffff;
         clip-path: polygon(
-            0 10%, 
-            10% 0, 
-            50% 0, 
-            60% 10%, 
-            100% 10%, 
+            0 20px, 
+            20px 0, 
+            100px 0, 
+            120px 20px, 
+            100% 20px, 
             100% 100%, 
-            10% 100%,
-            0 90%
+            100% 100%,
+            0 100%
         );
         height: 500px;
         width: 100%;
@@ -28,14 +28,14 @@
         #evolutionDisplayContainer{
             position: absolute;
             clip-path: polygon(
-                0 10%, 
-                10% 0, 
-                50% 0, 
-                60% 10%, 
-                100% 10%, 
+                0 20px, 
+                20px 0, 
+                90px 0, 
+                110px 20px, 
+                100% 20px, 
                 100% 100%, 
-                10% 100%,
-                0 90%
+                100% 100%,
+                0 100%
             );
             top: 5px;
             left: 5px;
@@ -56,7 +56,7 @@
                 gap: 1rem;
                 width: 100%;
 
-                .dna-column {
+                #dnaColumn {
                     position: absolute;
                     top: 0;
                     left: 0;
@@ -67,20 +67,21 @@
                     pointer-events: none;
                 }
 
-                .evolution-path-column {
-                    position: absolute;
+                .evolutionPathColumn {
+                    position: relative;
                     display: flex;
-                    justify-content: flex-start;
+                    flex-direction: row;
                     align-items: center;
                     gap: 1rem;
-                    overflow-x: scroll;
+                    overflow-x: auto;
 
                     width: 100%;
+                    height: 100%;
                     padding: 1rem;
                     box-sizing: border-box;
                     border-radius: 10px;
 
-                    .evolution-step {
+                    .evolutionStep {
                         display: flex;
                         align-items: center;
                         background: rgba(0, 0, 0, 0.2);
@@ -103,22 +104,61 @@
                         }
                     }
 
-                    .evo-info {
+                    .evoInfo {
                         display: flex;
                         flex-direction: column;
                         gap: 15px;
                         margin-left: 15px;
 
-                        .evo-label {
+                        .evoLabel {
                             color: #00ffcc;
                         }
 
-                        .evo-description{
+                        .evoDescription{
                             padding: 20px;
                             background: rgba(255, 255, 255, 0.2);
                             border-radius: 20px;
                             text-align: justify;
                             width: 400px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @media (max-width: 768px){
+        #evolutionDisplayWrapper{
+            height: auto;
+            min-height: 600px;
+
+            #evolutionDisplayContainer{
+                #evolutionDisplay{
+                    .evolutionPathColumn {
+                        flex-direction: column;
+                        justify-content: flex-start;
+                        overflow-y: auto;
+                        overflow-x: hidden;
+                        height: 500px;
+                        max-height: 100%;
+
+                        .evolutionStep{
+                            flex-direction: column;
+
+                            img{
+                                align-self: center;
+                                margin-bottom: 15px;
+                            }
+                        }
+
+                        .evoInfo {
+                            margin-left: 0;
+
+                            .evoLabel, .evoDescription {
+                                font-size: 0.8rem;
+                                width: 100%;
+                                max-width: 300px;
+                            }
                         }
                     }
                 }

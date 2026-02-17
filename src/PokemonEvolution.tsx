@@ -77,27 +77,27 @@ const PokemonEvolution: React.FC<EvolutionProps> = ({ evolutionUrl, typeBackgrou
                     style={{ 
                         background: typeBackground,
                         backgroundBlendMode: "multiply",
-                        backgroundColor: "#A8A878"
+                        backgroundColor: "#00000051"
                     }}
                 >
                     <div id="evolutionDisplay">
-                        <div className="dna-column">
+                        <div id="dnaColumn">
                             <DNA />
                         </div>
 
-                        <div className="evolution-path-column">
+                        <div className="evolutionPathColumn">
                             {evolutionChain.map((evo, index) => (
                                 <div
                                     key={evo.name}
-                                    className="evolution-step"
+                                    className="evolutionStep"
                                     style={{cursor: 'pointer'}}
                                     onClick={() => onSelectNewPokemon(evo.name)}
                                 >
                                     <img src={evo.image} alt={evo.name} />
-                                    <div className="evo-info">
+                                    <div className="evoInfo">
                                         <p>{evo.name.toUpperCase()}</p>
-                                        <span className="evo-label">STAGE {index + 1}</span>
-                                        <span className="evo-description">{evo.description}</span>
+                                        <span className="evoLabel">STAGE {index + 1}</span>
+                                        <span className="evoDescription">{evo.description}</span>
                                     </div>
                                 </div>
                             ))}

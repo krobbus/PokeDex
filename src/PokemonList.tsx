@@ -29,7 +29,10 @@ const PokemonList: React.FC = () => {
   const [listLoading, setListLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
 
-  const limit = 9;
+  const [isVisible, setIsVisible] = useState(true);
+  const scrollTimer = useRef<number | null>(null);
+
+  const limit = 21;
   const totalPokemon = 1302;
   const maxPage = Math.ceil(totalPokemon / limit);
   const currentPage = Math.floor(offset / limit) + 1;
@@ -39,6 +42,25 @@ const PokemonList: React.FC = () => {
     if (pokemonList.length > 0) return ver(pokemonList[0].id);
     return "LOADING...";
   })();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsVisible(true);
+
+      if (scrollTimer.current) {
+        window.clearTimeout(scrollTimer.current);
+      }
+
+      scrollTimer.current = window.setTimeout(() => {
+        if (window.scrollY > 50) {
+          setIsVisible(false);
+        }
+      }, 2000); 
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleOpenModal = async (pokemon: any) => {
     const searchId = pokemon.id || pokemon;
@@ -223,50 +245,44 @@ const PokemonList: React.FC = () => {
 
   return (
     <>
-      <nav id="navContainer">
-        <div id="navStyle">
-          <a href={'#navStyle'}><img id="navLogo" src={logo} /></a>
-          
-          <ul id="navUlStyle">
-            <li><a href={'#flexStyle'}>Home</a></li>
-            <li><a href={'#shinyToggleBtn'}>Spot the Shiny</a></li>
-            <li><a href={'#footerContainer'}>About</a></li>
-            <li id="logout"><a href={'./PokemonIntro'}>Go Back</a></li>
-          </ul>
-        </div>
+      <nav id="navContainer" className={isVisible ? "nav-show" : "nav-hide"}>
+        <ul>          
+          <li><a href={'#flexStyle'}>Home</a></li>
+          <li><a href={'#footerContainer'}>About</a></li>
+          <li id="logout"><a href={'./PokemonIntro'}>Go Back</a></li>
+        </ul>
       </nav>
       
       <section id="flexStyle">
-        <main id="header">
+        <main>
           <h1>POKEDEX</h1>
           <h5>Current Version Loaded: v{currentVersion}. Encounters logged: {totalPokemon}.</h5>
         </main>
 
-        <div id="searchContainerStyle">
-          <input 
-            id="inputStyle"
-            type="text" 
-            placeholder="INITIALIZING SCAN... INPUT NAME OR ID" 
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-          />
-          <button id="searchButtonStyle" onClick={handleSearch}>SEARCH</button>
+        <div id="searchPaginationField">
+          <div id="searchContainer">
+            <input 
+              id="searchInput"
+              type="text" 
+              placeholder="INITIALIZING SCAN... INPUT NAME OR ID" 
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+            />
 
-          {searchResult && (
-            <button 
-              id="searchButtonStyle" style={{ backgroundColor: '#f44336', marginLeft: '10px' }} 
-              onClick={() => {setSearchResult(null); setSearchQuery('');}}
-            > 
-              CLEAR 
-            </button>
-          )}
-        </div>
+            <button className="searchButton" onClick={handleSearch}>SEARCH</button>
 
-        {error && <p style={{ color: 'red', fontFamily: "'Press Start 2P', cursive", marginBottom: '10px'}}>{error}</p>}
+            {searchResult && (
+              <button 
+                className="searchButton" style={{ backgroundColor: '#f44336', marginLeft: '5px' }} 
+                onClick={() => {setSearchResult(null); setSearchQuery('');}}
+              > 
+                CLEAR 
+              </button>
+            )}
+          </div>
 
-        {!loading && !searchResult && (
-          <div id="searchFilterField">
+          {!loading && !searchResult && (
             <div id="paginationContainer">
               <button 
                 disabled={offset === 0} 
@@ -292,8 +308,24 @@ const PokemonList: React.FC = () => {
               
               <button onClick={() => handlePageChange('next')} id="pageButtonStyle"> NEXT </button>
             </div>
+          )}
 
-            <div id="filterContainer">
+          <button 
+            className={`shiny-toggle-btn ${isShinyMode ? 'active' : ''}`}
+            id="shinyToggleBtn"
+            onClick={() => setIsShinyMode(!isShinyMode)}
+          >
+            {isShinyMode ? ".✦ ݁˖ SHINY MODE: ON" : ".✦ ݁˖ SPOT THE SHINY POKEMON"}
+          </button>
+        </div>
+
+        {error && <p style={{ color: 'red', fontFamily: "'Press Start 2P', cursive", margin: '2rem 0'}}>{error}</p>}
+        {listLoading && <p style={{ color: 'white', fontFamily: "'Press Start 2P', cursive", margin: '2rem 0'}}>SCANNING POKEMON DETAILS, TRAINER PLEASE WAIT...</p>}
+        {loading && <p style={{ color: 'white', fontFamily: "'Press Start 2P', cursive", margin: '2rem 0' }}>SEARCHING TALL GRASS...</p>}
+        
+        <div id="gridContainer">
+          {!loading && !searchResult && (
+            <div id="filterField">
               <img src={filterIcon} id="inner-filter-icon" alt="filter icon" />
 
               <select id="filterSelection" value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
@@ -304,16 +336,15 @@ const PokemonList: React.FC = () => {
               </select>
 
               <img 
-                src={`./src/assets/type-icons/${sortTypeBy}.svg`} 
-                id="inner-type-icon" 
-                style={{display: sortTypeBy === 'all' ? 'none' : 'block'}}
+                src={sortTypeBy === 'all' ? filterIcon : `./src/assets/type-icons/${sortTypeBy}.svg`}
+                id="inner-type-icon"
+                style={{ filter : sortTypeBy === 'all' ? 'none' : 'invert()'}}
                 onError={(e) => { e.currentTarget.style.display = 'none'; }}
                 alt={`${sortTypeBy} icon`} 
               />
 
               <select 
-                id="filterTypeSelection" 
-                style={{ paddingLeft: sortTypeBy === 'all' ? '10px' : '50px' }}
+                id="filterTypeSelection"
                 value={sortTypeBy} 
                 onChange={(e) => setTypeSortBy(e.target.value)}
               >
@@ -337,58 +368,48 @@ const PokemonList: React.FC = () => {
                 <option value="water">Water Type</option>
               </select>
             </div>
-          </div>
-        )}
-
-        <button 
-          className={`shiny-toggle-btn ${isShinyMode ? 'active' : ''}`}
-          id="shinyToggleBtn"
-          onClick={() => setIsShinyMode(!isShinyMode)}
-        >
-          {isShinyMode ? "✦ SHINY MODE ON" : "✦ SPOT THE SHINY"}
-        </button>
-
-        {listLoading && <p style={{ color: 'white', fontFamily: "'Press Start 2P', cursive", marginBottom: '10px'}}>SCANNING POKEMON DETAILS, TRAINER PLEASE WAIT...</p>}
-        {loading && <p style={{ color: 'white', fontFamily: "'Press Start 2P', cursive", marginBottom: '10px' }}>SEARCHING TALL GRASS...</p>}
-
-        <div id="gridStyle" style={{ opacity: loading ? 0.5 : 1 }}>
-          {searchResult ? (
-            <PokemonCard 
-              id={searchResult.id} 
-              name={searchResult.name} 
-              image={searchResult.image}
-              shinyImage={searchResult.shinyImage}
-              types={searchResult.types} 
-              hp={searchResult.hp}
-              onClick={() => handleOpenModal(searchResult)}
-            />
-          ) : (
-            sortPokemon.length > 0 ? (
-              sortPokemon.map((p, index) => (
-                <PokemonCard 
-                  key={`${p.name}-${index}`} 
-                  {...p}
-                  image={isShinyMode ? p.shinyImage : p.image}
-                  isShiny={isShinyMode && p.isShiny}
-                  onClick={() => handleOpenModal(p)}
-                />
-              ))
-            ) : (
-              !loading && (
-                <div style={{ textAlign: 'center', gridColumn: '1 / -1' }}>
-                  <p style={{ fontFamily: "'Press Start 2P', cursive", marginTop: "4rem" }}>
-                    NO {sortTypeBy.toUpperCase()} TYPES SPOTTED ON THIS PAGE.
-                  </p><br />
-                  <p>TRY CHANGING THE PAGE OR FILTER, TRAINER.</p>
-                </div>
-              )
-            )
           )}
+
+          <div id="gridStyle" style={{ opacity: loading ? 0.5 : 1 }}>
+            {searchResult ? (
+              <PokemonCard 
+                id={searchResult.id} 
+                name={searchResult.name} 
+                image={searchResult.image}
+                shinyImage={searchResult.shinyImage}
+                types={searchResult.types} 
+                hp={searchResult.hp}
+                onClick={() => handleOpenModal(searchResult)}
+              />
+            ) : (
+              sortPokemon.length > 0 ? (
+                sortPokemon.map((p, index) => (
+                  <PokemonCard 
+                    key={`${p.name}-${index}`} 
+                    {...p}
+                    image={isShinyMode ? p.shinyImage : p.image}
+                    isShiny={isShinyMode && p.isShiny}
+                    onClick={() => handleOpenModal(p)}
+                  />
+                ))
+              ) : (
+                !loading && (
+                  <div style={{ textAlign: 'center', gridColumn: '1 / -1' }}>
+                    <p style={{ fontFamily: "'Press Start 2P', cursive", margin: "4rem 0" }}>
+                      NO {sortTypeBy.toUpperCase()} TYPES SPOTTED ON THIS PAGE.
+                    <br />
+                      TRY CHANGING THE PAGE OR FILTER, TRAINER.
+                    </p>
+                  </div>
+                )
+              )
+            )}
+          </div>
         </div>
       </section>
 
       <Footer />
-
+      
       <PokemonModal
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)} 
