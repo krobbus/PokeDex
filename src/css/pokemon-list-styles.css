@@ -66,7 +66,7 @@
     #logout:hover{
       filter: drop-shadow(0 0 20px #ff7777);
 
-      & > a{
+      a{
         color: #8a3636;
       }
     }

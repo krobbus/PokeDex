@@ -28,20 +28,25 @@ const PokemonModal: React.FC<ModalProps> = ({ isOpen, onClose, pokemon, onSelect
         if (!pokemon || !pokemon.types || pokemon.types.length === 2) {
             const color1 = PokemonTypeColors[pokemon.types[0]] || '#A8A878';
             const color2 = PokemonTypeColors[pokemon.types[1]] || '#A8A878';
+            const darken = "linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3))";
 
             if (pokemon.isShiny) {
-                const baseGradient = `linear-gradient(135deg, ${color1}, ${color2})`;
-                return `linear-gradient(rgba(255, 217, 0, 0.2), rgba(255, 215, 0, 0.1)), ${baseGradient}`;
+                const shinyOverlay = "linear-gradient(rgba(255, 217, 0, 0.2), rgba(255, 215, 0, 0.1))";
+                if (pokemon.types.length === 1) {
+                    return `${shinyOverlay}, ${color1}`;
+                } else {
+                    const color2 = PokemonTypeColors[pokemon.types[1]] || color1;
+                    return `${shinyOverlay}, linear-gradient(135deg, ${color1}, ${color2})`;
+                }
             }
 
             if (pokemon.types.length === 1) {
-                return color1 || color2;
+                return `${darken}, ${color1}`;
             }
 
             if (pokemon.types.length === 2) {
-                const overlay = "linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3))";
                 const baseGradient = `linear-gradient(135deg, ${color1}, ${color2})`;
-                return `${overlay}, ${baseGradient}`;
+                return `${darken}, ${baseGradient}`;
             }
             return color1;
         }
