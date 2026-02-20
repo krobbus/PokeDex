@@ -340,7 +340,7 @@ const PokemonList: React.FC = () => {
               </select>
 
               <img 
-                src={sortTypeBy === 'all' ? filterIcon : `./css/assets/type-icons/${sortTypeBy}.svg`}
+                src={sortTypeBy === 'all' ? filterIcon : `./assets/type-icons/${sortTypeBy}.svg`}
                 id="inner-type-icon"
                 style={{ filter : sortTypeBy === 'all' ? 'none' : 'invert()'}}
                 onError={(e) => { e.currentTarget.style.display = 'none'; }}
