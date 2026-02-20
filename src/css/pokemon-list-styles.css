@@ -382,7 +382,6 @@
         position: absolute;
         left: 385px;
         top: 50%;
-        filter: invert();
         transform: translateY(-50%);
         width: 25px;
         pointer-events: none;
