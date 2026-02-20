@@ -59,7 +59,7 @@ const PokemonIntro: React.FC<IntroProps> = ({ onComplete }) => {
                     visibility: isBooting ? 'hidden' : 'visible'
                 }}
             >
-                WELCOME TO POKEMON RESEARCH LAB
+                Welcome to Pokémon Research Lab
             </h1>
 
             <div id="introComponents">

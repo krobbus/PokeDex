@@ -259,7 +259,7 @@ const PokemonList: React.FC = () => {
       
       <section id="flexStyle">
         <main>
-          <h1>POKEDEX</h1>
+          <h1>Pokédex</h1>
           <h5>Current Version Loaded: v{currentVersion}. Encounters logged: {totalPokemon}.</h5>
         </main>
 

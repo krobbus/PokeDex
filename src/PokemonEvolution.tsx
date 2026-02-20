@@ -61,7 +61,7 @@ const PokemonEvolution: React.FC<EvolutionProps> = ({ evolutionUrl, typeBackgrou
     if (!evolutionUrl) {
         return (
             <section id="evolutionContainer">
-                <p style={{textAlign: 'center', color: '#666'}}>
+                <p style={{textAlign: 'center', color: '#666666'}}>
                     SELECT A POKEMON TO VIEW GENETIC EVOLUTION DATA
                 </p>
             </section>
